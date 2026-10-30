@@ -15,6 +15,7 @@ system for a language model.
 | `models/nk-gali-2015-ch6` | Galí (2015), chapter 6 | New Keynesian model with staggered price and wage setting |
 | `models/gali-monacelli-2005` | Galí and Monacelli (2005) | Small open economy and monetary regimes |
 | `models/smets-wouters-2007` | Smets and Wouters (2007) | First-order medium-scale dynamics |
+| [`models/iacoviello-neri-2010`](models/iacoviello-neri-2010/spec/model.md) | Iacoviello and Neri (2010) | Housing collateral, two-sector production and a published Bayesian estimation reference |
 
 The library also includes a Hansen (1985) indivisible-labour core, for which the original
 article was not supplied in the current primary-source review.
@@ -54,9 +55,10 @@ Canonical entries follow the methodology of their source.
   is part of the canonical contribution. The model then uses `estimation.yaml` for
   structured source facts and `spec/estimation.md` for their interpretation.
 
-Smets and Wouters (2007) is the current Bayesian example: its observable mapping, priors,
-posterior procedure and published empirical evidence are documented, while the repository
-does not run the estimation itself.
+Smets and Wouters (2007) and Iacoviello and Neri (2010) document observable mappings,
+priors, posterior procedures and published empirical evidence. The repository does not
+run those estimations. The housing entry states its budget-consistency reconciliations
+and distinguishes published parameter means from numerical-reference coefficients.
 
 See `docs/model-documentation-policy.md` for the full rule and `CONTRIBUTING.md` before
 adding or changing a model.
@@ -98,6 +100,7 @@ python -m pytest -q
 python -m modellib golden nk-gali-2015-ch3
 python -m modellib golden gali-monacelli-2005
 python -m modellib golden smets-wouters-2007
+python -m modellib golden iacoviello-neri-2010
 ```
 
 Execution outputs and historical test counts belong to CI, pull requests or Git

@@ -1,0 +1,88 @@
+id: housing-collateral-in
+kind: friction
+summary: Binding local collateral mechanism, with beta_impatient below beta_patient. No occasionally binding
+  or stochastic loan-to-value regime is implied.
+citation:
+  authors:
+  - Iacoviello
+  - Neri
+  year: 2010
+  title: 'Housing Market Spillovers: Evidence from an Estimated DSGE Model'
+  journal: 'American Economic Journal: Macroeconomics 2(2), 125-164'
+  doi: 10.1257/mac.2.2.125
+variables:
+  provides:
+  - b_borrower
+  - lambda_borrower
+  requires:
+  - a_j_in
+  - a_z_in
+  - h_impatient
+  - i
+  - pi
+  - q_h
+  - uc_impatient
+parameters: []
+equations:
+- id: binding-collateral
+  expr: b_borrower-q_h(+1)-h_impatient+i-pi(+1)
+  description: Borrowing equals the loan-to-value fraction of expected next-period nominal collateral,
+    divided by the gross rate.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B13, printed p.160
+  derivation: docs/theory/housing-and-collateral.md#binding-collateral
+- id: borrower-bond
+  expr: uc_impatient-(1-in_lambda_weight)*(uc_impatient(+1)+i-pi(+1))-in_lambda_weight*lambda_borrower
+  description: Borrower Euler condition with strictly positive collateral multiplier.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B15, printed p.160
+  derivation: docs/theory/housing-and-collateral.md#binding-collateral
+- id: borrower-housing
+  expr: q_h+uc_impatient-(1-in_impatient_h_weight-in_collateral_h_weight)*(a_z_in+a_j_in-h_impatient)-in_impatient_h_weight*(q_h(+1)+uc_impatient(+1))-in_collateral_h_weight*(lambda_borrower+q_h(+1)-i+pi(+1))
+  description: Housing value includes its service flow, resale value and relaxation of the borrowing constraint.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B14, printed p.160
+  derivation: docs/theory/housing-and-collateral.md#housing-demand
+shocks: []
+replaces: []
+depends_on:
+- core-housing-in
+incompatible_with: []
+compatible_cores:
+- core-housing-in
+minimum_perturbation_order: 1
+equation_form: log-linear-deviations
+solution_requirement: First-order local solution around the balanced-growth path. The collateral multiplier
+  remains strictly positive.
+assumptions:
+- id: stationary-local-equilibrium
+  status: canonical
+  embodied_in:
+  - binding-collateral
+  - borrower-bond
+  - borrower-housing
+  statement: Variables are stationary log deviations from the deterministic balanced-growth path; household-specific
+    discounting and sector-specific trends are retained.
+  substituting: An occasionally binding constraint or nonlinear global solution requires a separate specification.
+- id: strictly-binding-local-collateral
+  status: canonical
+  embodied_in:
+  - binding-collateral
+  - borrower-bond
+  - borrower-housing
+  statement: The impatient discount factor is below the patient factor; the collateral multiplier is strictly
+    positive in the neighbourhood of the deterministic equilibrium.
+  substituting: A slack or occasionally binding borrowing constraint changes the equilibrium conditions
+    and cannot be represented by this local equality.
+verification:
+  reviewed_by: null
+  notes: Binding local collateral mechanism, with beta_impatient below beta_patient. No occasionally binding
+    or stochastic loan-to-value regime is implied.
+  open_questions: []
+provenance:
+  license: Own implementation derived from the published equations
+  redistributable: true
+  permission_note: No external replication source or dataset is incorporated.

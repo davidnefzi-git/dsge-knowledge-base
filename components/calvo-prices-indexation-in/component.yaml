@@ -1,0 +1,98 @@
+id: calvo-prices-indexation-in
+kind: friction
+summary: Dixit-Stiglitz retailer pricing and IN growth discounting, without textbook decreasing-returns
+  or SW Kimball slope corrections.
+citation:
+  authors:
+  - Iacoviello
+  - Neri
+  year: 2010
+  title: 'Housing Market Spillovers: Evidence from an Estimated DSGE Model'
+  journal: 'American Economic Journal: Macroeconomics 2(2), 125-164'
+  doi: 10.1257/mac.2.2.125
+variables:
+  provides: []
+  requires:
+  - pi
+  - x_price
+parameters:
+- name: theta_p_in
+  description: Goods price nonreset probability
+  default: 0.83
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: beta
+    hyperparameters:
+    - 0.667
+    - 0.05
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: iota_p_in
+  description: Price indexation to lagged inflation
+  default: 0.69
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: beta
+    hyperparameters:
+    - 0.5
+    - 0.2
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+equations:
+- id: indexed-price-pc
+  expr: theta_p_in*(pi-iota_p_in*pi(-1)-beta_patient*in_growth_y*(pi(+1)-iota_p_in*pi)-eps_p_in)+(1-theta_p_in)*(1-beta_patient*in_growth_y*theta_p_in)*x_price
+  description: Indexed goods price Phillips curve in gross-markup deviations; multiplied by the reset
+    probability for a regular flexible-price limit.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B28, printed p.161
+  derivation: docs/theory/price-setting.md#in-price-setting
+shocks:
+- id: eps_p_in
+  description: Positive cost-push innovation raises inflation
+  normalisation: One natural-log unit innovation; reported standard deviations are metadata, not IRF scaling.
+  sign_convention: Positive cost-push innovation raises inflation
+  sd: 0.0046
+  source: Iacoviello and Neri (2010), Table 4 posterior mean
+replaces:
+- core-housing-in.flex-price
+depends_on:
+- core-housing-in
+incompatible_with: []
+compatible_cores:
+- core-housing-in
+minimum_perturbation_order: 1
+equation_form: log-linear-deviations
+solution_requirement: First-order local solution around the balanced-growth path. The collateral multiplier
+  remains strictly positive.
+assumptions:
+- id: stationary-local-equilibrium
+  status: canonical
+  embodied_in:
+  - indexed-price-pc
+  statement: Variables are stationary log deviations from the deterministic balanced-growth path; household-specific
+    discounting and sector-specific trends are retained.
+  substituting: An occasionally binding constraint or nonlinear global solution requires a separate specification.
+- id: calvo-retailer-price-setting
+  status: canonical
+  embodied_in:
+  - indexed-price-pc
+  statement: Retailers buy a homogeneous wholesale good and sell differentiated varieties under constant-elasticity
+    demand, with Calvo resets and lagged-price-inflation indexation.
+  substituting: Firm-specific decreasing returns and Kimball demand curvature introduce slope corrections
+    absent from this retailer pricing problem.
+verification:
+  reviewed_by: null
+  notes: Dixit-Stiglitz retailer pricing and IN growth discounting, without textbook decreasing-returns
+    or SW Kimball slope corrections.
+  open_questions: []
+provenance:
+  license: Own implementation derived from the published equations
+  redistributable: true
+  permission_note: No external replication source or dataset is incorporated.

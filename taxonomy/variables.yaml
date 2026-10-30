@@ -259,3 +259,200 @@ prod:
   units: level (log deviation in a log-linear component)
   timing: contemporaneous
   common_variable: null
+
+# --- two-household, two-sector housing economy ------------------------------------
+c_patient:
+  description: Patient-household consumption
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous
+  common_variable: null
+c_impatient:
+  description: Impatient-household consumption
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous
+  common_variable: null
+uc_patient:
+  description: Patient-household marginal utility of consumption
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous; forward-looking under internal habits
+  common_variable: null
+uc_impatient:
+  description: Impatient-household marginal utility of consumption
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous; forward-looking under internal habits
+  common_variable: null
+h_patient:
+  description: Patient-household housing stock
+  units: log deviation from balanced-growth steady state
+  timing: end-of-period stock chosen at t; h_patient(-1) is inherited
+  common_variable: null
+h_impatient:
+  description: Impatient-household housing stock
+  units: log deviation from balanced-growth steady state
+  timing: end-of-period stock chosen at t; h_impatient(-1) is inherited
+  common_variable: null
+b_borrower:
+  description: Positive gross real debt of borrowing households
+  units: log deviation from balanced-growth steady state
+  timing: end-of-period debt chosen at t; inherited repayment uses b_borrower(-1)
+  common_variable: null
+lambda_borrower:
+  description: Positive multiplier on the locally binding housing collateral constraint
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous
+  common_variable: null
+q_h:
+  description: Real price of housing in consumption-good units
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous; forward-looking asset price
+  common_variable: null
+y_c:
+  description: Gross nonhousing-sector output
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous
+  common_variable: null
+inv_h:
+  description: Residential investment, newly produced housing
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous flow
+  common_variable: null
+x_price:
+  description: Retail price markup over goods-sector marginal cost
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous; forward-looking under staggered prices
+  common_variable: null
+n_c_patient:
+  description: Patient-household hours in nonhousing production
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous
+  common_variable: null
+w_c_patient:
+  description: Patient-household real wage in nonhousing production
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous; lagged wage enters indexed wage setting
+  common_variable: null
+xw_c_patient:
+  description: Patient-household wage markup in nonhousing production
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous
+  common_variable: null
+n_c_impatient:
+  description: Impatient-household hours in nonhousing production
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous
+  common_variable: null
+w_c_impatient:
+  description: Impatient-household real wage in nonhousing production
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous; lagged wage enters indexed wage setting
+  common_variable: null
+xw_c_impatient:
+  description: Impatient-household wage markup in nonhousing production
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous
+  common_variable: null
+k_c:
+  description: Capital stock used in nonhousing production
+  units: log deviation from balanced-growth steady state
+  timing: end-of-period stock chosen at t; production at t uses the lagged stock
+  common_variable: null
+rk_c:
+  description: Real rental rate of capital services in nonhousing production
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous
+  common_variable: null
+u_c:
+  description: Capital utilisation in nonhousing production
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous
+  common_variable: null
+inv_k_c:
+  description: Gross business capital investment assigned to nonhousing production
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous flow
+  common_variable: null
+n_h_patient:
+  description: Patient-household hours in housing production
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous
+  common_variable: null
+w_h_patient:
+  description: Patient-household real wage in housing production
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous; lagged wage enters indexed wage setting
+  common_variable: null
+xw_h_patient:
+  description: Patient-household wage markup in housing production
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous
+  common_variable: null
+n_h_impatient:
+  description: Impatient-household hours in housing production
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous
+  common_variable: null
+w_h_impatient:
+  description: Impatient-household real wage in housing production
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous; lagged wage enters indexed wage setting
+  common_variable: null
+xw_h_impatient:
+  description: Impatient-household wage markup in housing production
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous
+  common_variable: null
+k_h:
+  description: Capital stock used in housing production
+  units: log deviation from balanced-growth steady state
+  timing: end-of-period stock chosen at t; production at t uses the lagged stock
+  common_variable: null
+rk_h:
+  description: Real rental rate of capital services in housing production
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous
+  common_variable: null
+u_h:
+  description: Capital utilisation in housing production
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous
+  common_variable: null
+inv_k_h:
+  description: Gross business capital investment assigned to housing production
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous flow
+  common_variable: null
+a_c_in:
+  description: Iacoviello-Neri nonhousing labour-augmenting technology
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous AR(1) state
+  common_variable: null
+a_h_in:
+  description: Iacoviello-Neri housing labour-augmenting technology
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous AR(1) state
+  common_variable: null
+a_k_in:
+  description: Iacoviello-Neri investment-specific technology
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous AR(1) state
+  common_variable: null
+a_j_in:
+  description: Iacoviello-Neri housing preference weight
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous AR(1) state
+  common_variable: null
+a_tau_in:
+  description: Iacoviello-Neri labour disutility weight
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous AR(1) state
+  common_variable: null
+a_z_in:
+  description: Iacoviello-Neri intertemporal utility weight
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous AR(1) state
+  common_variable: null
+a_s_in:
+  description: Iacoviello-Neri inflation-objective disturbance
+  units: log deviation from balanced-growth steady state
+  timing: contemporaneous AR(1) state
+  common_variable: null

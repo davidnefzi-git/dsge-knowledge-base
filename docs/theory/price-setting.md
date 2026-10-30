@@ -175,3 +175,42 @@ The last row is worth emphasising. Every equation in this document is an approxi
 - Kimball, M. (1995). The quantitative analytics of the basic neomonetarist model. *Journal of Money, Credit and Banking* 27(4), 1241–1277.
 - Rotemberg, J. (1982). Monopolistic price adjustment and aggregate output. *Review of Economic Studies* 49(4), 517–531.
 - Smets, F. and R. Wouters (2007). Shocks and frictions in US business cycles. *American Economic Review* 97(3), 586–606.
+
+## Iacoviello and Neri: indexed nonhousing prices
+
+### IN price setting
+
+**Anchor: `in-price-setting`.**
+
+Iacoviello and Neri (2010), equation (8) and B28, printed pp. 132 and 161
+(one-based physical PDF pp. 8 and 37), places retail Calvo pricing only in the
+nonhousing sector. Retailers buy competitive wholesale output at $P^w_t$ and sell
+at $P_t$; the gross markup is $X_t=P_t/P^w_t$. A fraction $1-\theta_p$ reset each
+period, while nonresetters index to lagged goods inflation with elasticity
+$\iota_p$. Patient household valuation supplies the growth-adjusted discount
+factor $d_p=\beta_pG_C$.
+
+The reset-price first-order condition sums discounted marginal profits while the
+price survives. Combining its linear recursion with the indexed price index
+eliminates the reset price and gives
+
+$$
+\pi_t-\iota_p\pi_{t-1}
+=d_pE_t(\pi_{t+1}-\iota_p\pi_t)-\kappa_p x_t+u_{pt},
+\qquad \kappa_p=\frac{(1-\theta_p)(1-d_p\theta_p)}{\theta_p}.
+$$
+
+Here $x_t=\log(X_t/\bar X)$, so a larger markup means a lower marginal cost and
+has a negative inflation coefficient. Inflation and the cost-push innovation are
+quarterly log-rate deviations. The innovation is independently distributed,
+not a persistent markup state. Housing output prices remain flexible, with the
+relative price determined by housing demand, collateral and construction supply.
+
+The article states this linear pricing relation directly. Its reuse requires the
+same retail markup orientation, indexed price convention and growth-adjusted
+patient discounting. It cannot be attached to an unrelated core by matching the
+name of its inflation variable.
+
+Reference: Iacoviello, M., and S. Neri (2010). Housing Market Spillovers: Evidence
+from an Estimated DSGE Model. *American Economic Journal: Macroeconomics* 2(2),
+125–164. [doi:10.1257/mac.2.2.125](https://doi.org/10.1257/mac.2.2.125).

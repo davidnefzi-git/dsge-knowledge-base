@@ -11,6 +11,7 @@ details, upload history, local filenames and development notes.
 | Galí and Monacelli (2005) | *Review of Economic Studies* 72, 707–734 | Complete-markets small-open-economy equilibrium, relative-price identities, natural allocation and monetary-policy regimes |
 | Smets and Wouters (2007) | *American Economic Review* 97(3), 586–606 | Structural equations (1)–(15), seven-observable measurement system, priors, posterior results, Bayesian estimation procedure and Tables 1A–1B |
 | Smets and Wouters (2007) | ECB Working Paper No. 722 | Equation conventions used for comparison with the published AER specification |
+| Iacoviello and Neri (2010) | *American Economic Journal: Macroeconomics* 2(2), 125–164 | Main-text equations (1)–(15), Appendix B (B1)–(B36), Table 1 calibration, Table 2 rounded ratios, complete Tables 3–4 priors and posterior statistics, ten observables, Appendix A and printed estimation procedure |
 
 ## Formula and version conventions
 
@@ -32,6 +33,31 @@ each equation was actually verified.
 The AER estimation reference is stored in
 `models/smets-wouters-2007/estimation.yaml` and explained in
 `models/smets-wouters-2007/spec/estimation.md`.
+
+**Iacoviello–Neri.** The published AEJ article controls scientific claims. Physical
+PDF page numbers are one-based and equal printed pages minus 124. The numerical
+reference has distinct point values and estimation settings; these are preserved
+as a separate parameter profile and empirical reference. They are not higher-
+precision values for the printed posterior means.
+
+The canonical first-order system is a budget-consistent interpretation. The utility
+primitive requires tomorrow's preference shock in the internal-habit continuation
+derivative, while the numerical reference factors out today's shock. The printed
+patient housing-wage coefficient repeats the nonhousing Calvo symbol; its sectoral
+reset problem requires the housing symbol. B34 omits utilisation costs that are
+present in B1 and have nonzero marginal cost; aggregate goods clearing retains
+them, and capital returns are net of those costs. Footnote 15's expenditure GDP is
+selected for policy because B33's production-side expression differs by resource
+costs once those terms are retained. These choices are disclosed at equation level
+and in the model and theory specifications.
+
+The growth normalisation exponentiates the weighted technology trend coefficients,
+matching the numerical reference and the paper's net-growth formulas to first
+order. Complete published estimation metadata are in
+`models/iacoviello-neri-2010/estimation.yaml`, with interpretation in
+`models/iacoviello-neri-2010/spec/estimation.md`. Web Appendices C/D and the original
+estimation system are outside the checked printed source. Published posterior
+findings remain reference evidence, rather than reproduced estimates.
 
 ## Remaining source boundaries
 

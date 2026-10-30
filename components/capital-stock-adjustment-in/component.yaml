@@ -1,0 +1,107 @@
+id: capital-stock-adjustment-in
+kind: friction
+summary: Costs concern changes in capital stocks, not changes in investment flows; first-order resource
+  adjustment costs vanish at the balanced-growth path.
+citation:
+  authors:
+  - Iacoviello
+  - Neri
+  year: 2010
+  title: 'Housing Market Spillovers: Evidence from an Estimated DSGE Model'
+  journal: 'American Economic Journal: Macroeconomics 2(2), 125-164'
+  doi: 10.1257/mac.2.2.125
+variables:
+  provides: []
+  requires:
+  - a_k_in
+  - k_c
+  - k_h
+  - rk_c
+  - rk_h
+  - uc_patient
+parameters:
+- name: phi_k_c
+  description: Adjustment cost curvature of c capital stock changes
+  default: 14.25
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: gamma
+    hyperparameters:
+    - 10
+    - 2.5
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: phi_k_h
+  description: Adjustment cost curvature of h capital stock changes
+  default: 10.9
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: gamma
+    hyperparameters:
+    - 10
+    - 2.5
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+equations:
+- id: capital-c-adjustment
+  expr: uc_patient-a_k_in+phi_k_c*(k_c-k_c(-1))-uc_patient(+1)-beta_patient*in_growth_y/in_growth_k*in_rkc_ss*rk_c(+1)+beta_patient*in_growth_y/in_growth_k*(1-delta_k_c)*a_k_in(+1)-beta_patient*in_growth_y*phi_k_c*(k_c(+1)-k_c)
+  description: Capital Euler including costs of changing the stock relative to its balanced-growth path;
+    net utilisation derivatives cancel.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B4-B5 and adjustment cost definition, printed pp.160,162
+  derivation: docs/theory/consumption-and-capital.md#in-capital-adjustment
+- id: capital-h-adjustment
+  expr: uc_patient+phi_k_h*(k_h-k_h(-1))-uc_patient(+1)-beta_patient*in_growth_y/in_growth_y*in_rkh_ss*rk_h(+1)-beta_patient*in_growth_y*phi_k_h*(k_h(+1)-k_h)
+  description: Capital Euler including costs of changing the stock relative to its balanced-growth path;
+    net utilisation derivatives cancel.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B4-B5 and adjustment cost definition, printed pp.160,162
+  derivation: docs/theory/consumption-and-capital.md#in-capital-adjustment
+shocks: []
+replaces:
+- core-housing-in.capital-c-no-adjustment
+- core-housing-in.capital-h-no-adjustment
+depends_on:
+- core-housing-in
+incompatible_with: []
+compatible_cores:
+- core-housing-in
+minimum_perturbation_order: 1
+equation_form: log-linear-deviations
+solution_requirement: First-order local solution around the balanced-growth path. The collateral multiplier
+  remains strictly positive.
+assumptions:
+- id: stationary-local-equilibrium
+  status: canonical
+  embodied_in:
+  - capital-c-adjustment
+  - capital-h-adjustment
+  statement: Variables are stationary log deviations from the deterministic balanced-growth path; household-specific
+    discounting and sector-specific trends are retained.
+  substituting: An occasionally binding constraint or nonlinear global solution requires a separate specification.
+- id: costs-of-changing-capital-stocks
+  status: canonical
+  embodied_in:
+  - capital-c-adjustment
+  - capital-h-adjustment
+  statement: Convex costs depend on the ratio of consecutive capital stocks relative to its sector-specific
+    balanced-growth value. Costs and their first derivative vanish at that path.
+  substituting: Costs in the change of investment flows are a different primitive and do not share these
+    Euler equations.
+verification:
+  reviewed_by: null
+  notes: Costs concern changes in capital stocks, not changes in investment flows; first-order resource
+    adjustment costs vanish at the balanced-growth path.
+  open_questions: []
+provenance:
+  license: Own implementation derived from the published equations
+  redistributable: true
+  permission_note: No external replication source or dataset is incorporated.
