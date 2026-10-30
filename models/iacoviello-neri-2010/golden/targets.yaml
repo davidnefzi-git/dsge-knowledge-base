@@ -1,0 +1,350 @@
+# Natural log units per unit innovation; rates are quarterly.
+# These are deterministic point-profile targets, not posterior-estimation results.
+composition:
+- core-housing-in
+- housing-collateral-in
+- internal-habit-consumption-in
+- capital-stock-adjustment-in
+- sectoral-capital-utilisation-in
+- calvo-prices-indexation-in
+- sectoral-calvo-wages-in
+- taylor-rule-in
+targets:
+- id: c-innovation-h0
+  kind: analytic
+  description: Unit innovation and natural-log AR(1) propagation.
+  source: Stationary shock law; Table 4 and the inflation-objective calibration.
+  shock: eps_c_in
+  variable: a_c_in
+  period: 0
+  expected: '1'
+  rtol: 1.0e-08
+  atol: 1.0e-08
+- id: c-innovation-h7
+  kind: analytic
+  description: Unit innovation and natural-log AR(1) propagation.
+  source: Stationary shock law; Table 4 and the inflation-objective calibration.
+  shock: eps_c_in
+  variable: a_c_in
+  period: 7
+  expected: rho_c_in**7
+  rtol: 1.0e-08
+  atol: 1.0e-08
+- id: h-innovation-h0
+  kind: analytic
+  description: Unit innovation and natural-log AR(1) propagation.
+  source: Stationary shock law; Table 4 and the inflation-objective calibration.
+  shock: eps_h_in
+  variable: a_h_in
+  period: 0
+  expected: '1'
+  rtol: 1.0e-08
+  atol: 1.0e-08
+- id: h-innovation-h7
+  kind: analytic
+  description: Unit innovation and natural-log AR(1) propagation.
+  source: Stationary shock law; Table 4 and the inflation-objective calibration.
+  shock: eps_h_in
+  variable: a_h_in
+  period: 7
+  expected: rho_h_in**7
+  rtol: 1.0e-08
+  atol: 1.0e-08
+- id: k-innovation-h0
+  kind: analytic
+  description: Unit innovation and natural-log AR(1) propagation.
+  source: Stationary shock law; Table 4 and the inflation-objective calibration.
+  shock: eps_k_in
+  variable: a_k_in
+  period: 0
+  expected: '1'
+  rtol: 1.0e-08
+  atol: 1.0e-08
+- id: k-innovation-h7
+  kind: analytic
+  description: Unit innovation and natural-log AR(1) propagation.
+  source: Stationary shock law; Table 4 and the inflation-objective calibration.
+  shock: eps_k_in
+  variable: a_k_in
+  period: 7
+  expected: rho_k_in**7
+  rtol: 1.0e-08
+  atol: 1.0e-08
+- id: j-innovation-h0
+  kind: analytic
+  description: Unit innovation and natural-log AR(1) propagation.
+  source: Stationary shock law; Table 4 and the inflation-objective calibration.
+  shock: eps_j_in
+  variable: a_j_in
+  period: 0
+  expected: '1'
+  rtol: 1.0e-08
+  atol: 1.0e-08
+- id: j-innovation-h7
+  kind: analytic
+  description: Unit innovation and natural-log AR(1) propagation.
+  source: Stationary shock law; Table 4 and the inflation-objective calibration.
+  shock: eps_j_in
+  variable: a_j_in
+  period: 7
+  expected: rho_j_in**7
+  rtol: 1.0e-08
+  atol: 1.0e-08
+- id: tau-innovation-h0
+  kind: analytic
+  description: Unit innovation and natural-log AR(1) propagation.
+  source: Stationary shock law; Table 4 and the inflation-objective calibration.
+  shock: eps_tau_in
+  variable: a_tau_in
+  period: 0
+  expected: '1'
+  rtol: 1.0e-08
+  atol: 1.0e-08
+- id: tau-innovation-h7
+  kind: analytic
+  description: Unit innovation and natural-log AR(1) propagation.
+  source: Stationary shock law; Table 4 and the inflation-objective calibration.
+  shock: eps_tau_in
+  variable: a_tau_in
+  period: 7
+  expected: rho_tau_in**7
+  rtol: 1.0e-08
+  atol: 1.0e-08
+- id: z-innovation-h0
+  kind: analytic
+  description: Unit innovation and natural-log AR(1) propagation.
+  source: Stationary shock law; Table 4 and the inflation-objective calibration.
+  shock: eps_z_in
+  variable: a_z_in
+  period: 0
+  expected: '1'
+  rtol: 1.0e-08
+  atol: 1.0e-08
+- id: z-innovation-h7
+  kind: analytic
+  description: Unit innovation and natural-log AR(1) propagation.
+  source: Stationary shock law; Table 4 and the inflation-objective calibration.
+  shock: eps_z_in
+  variable: a_z_in
+  period: 7
+  expected: rho_z_in**7
+  rtol: 1.0e-08
+  atol: 1.0e-08
+- id: s-innovation-h0
+  kind: analytic
+  description: Unit innovation and natural-log AR(1) propagation.
+  source: Stationary shock law; Table 4 and the inflation-objective calibration.
+  shock: eps_s_in
+  variable: a_s_in
+  period: 0
+  expected: '1'
+  rtol: 1.0e-08
+  atol: 1.0e-08
+- id: s-innovation-h7
+  kind: analytic
+  description: Unit innovation and natural-log AR(1) propagation.
+  source: Stationary shock law; Table 4 and the inflation-objective calibration.
+  shock: eps_s_in
+  variable: a_s_in
+  period: 7
+  expected: rho_s_in**7
+  rtol: 1.0e-08
+  atol: 1.0e-08
+- id: eps_c-y-h0
+  kind: analytic
+  description: Budget-consistent article-mean equilibrium response per unit canonical innovation.
+  source: Independent first-order Dynare reference; tests/fixtures/iacoviello_neri_2010_reference.json.
+    Source reconciliations in spec/model.md.
+  shock: eps_c_in
+  variable: y
+  period: 0
+  expected: '0.32594281224941796'
+  rtol: 1.0e-07
+  atol: 1.0e-07
+- id: eps_c-y-h7
+  kind: analytic
+  description: Budget-consistent article-mean equilibrium response per unit canonical innovation.
+  source: Independent first-order Dynare reference; tests/fixtures/iacoviello_neri_2010_reference.json.
+    Source reconciliations in spec/model.md.
+  shock: eps_c_in
+  variable: y
+  period: 7
+  expected: '0.6315053313221832'
+  rtol: 1.0e-07
+  atol: 1.0e-07
+- id: eps_h-inv_h-h0
+  kind: analytic
+  description: Budget-consistent article-mean equilibrium response per unit canonical innovation.
+  source: Independent first-order Dynare reference; tests/fixtures/iacoviello_neri_2010_reference.json.
+    Source reconciliations in spec/model.md.
+  shock: eps_h_in
+  variable: inv_h
+  period: 0
+  expected: '1.901413827755525'
+  rtol: 1.0e-07
+  atol: 1.0e-07
+- id: eps_h-inv_h-h7
+  kind: analytic
+  description: Budget-consistent article-mean equilibrium response per unit canonical innovation.
+  source: Independent first-order Dynare reference; tests/fixtures/iacoviello_neri_2010_reference.json.
+    Source reconciliations in spec/model.md.
+  shock: eps_h_in
+  variable: inv_h
+  period: 7
+  expected: '1.2937244644025387'
+  rtol: 1.0e-07
+  atol: 1.0e-07
+- id: eps_k-inv-h0
+  kind: analytic
+  description: Budget-consistent article-mean equilibrium response per unit canonical innovation.
+  source: Independent first-order Dynare reference; tests/fixtures/iacoviello_neri_2010_reference.json.
+    Source reconciliations in spec/model.md.
+  shock: eps_k_in
+  variable: inv
+  period: 0
+  expected: '1.5648511479227156'
+  rtol: 1.0e-07
+  atol: 1.0e-07
+- id: eps_k-inv-h7
+  kind: analytic
+  description: Budget-consistent article-mean equilibrium response per unit canonical innovation.
+  source: Independent first-order Dynare reference; tests/fixtures/iacoviello_neri_2010_reference.json.
+    Source reconciliations in spec/model.md.
+  shock: eps_k_in
+  variable: inv
+  period: 7
+  expected: '1.0213958527782756'
+  rtol: 1.0e-07
+  atol: 1.0e-07
+- id: eps_j-q_h-h0
+  kind: analytic
+  description: Budget-consistent article-mean equilibrium response per unit canonical innovation.
+  source: Independent first-order Dynare reference; tests/fixtures/iacoviello_neri_2010_reference.json.
+    Source reconciliations in spec/model.md.
+  shock: eps_j_in
+  variable: q_h
+  period: 0
+  expected: '0.20988072684461612'
+  rtol: 1.0e-07
+  atol: 1.0e-07
+- id: eps_j-q_h-h7
+  kind: analytic
+  description: Budget-consistent article-mean equilibrium response per unit canonical innovation.
+  source: Independent first-order Dynare reference; tests/fixtures/iacoviello_neri_2010_reference.json.
+    Source reconciliations in spec/model.md.
+  shock: eps_j_in
+  variable: q_h
+  period: 7
+  expected: '0.15578732347542285'
+  rtol: 1.0e-07
+  atol: 1.0e-07
+- id: eps_t-n_c_patient-h0
+  kind: analytic
+  description: Budget-consistent article-mean equilibrium response per unit canonical innovation.
+  source: Independent first-order Dynare reference; tests/fixtures/iacoviello_neri_2010_reference.json.
+    Source reconciliations in spec/model.md.
+  shock: eps_tau_in
+  variable: n_c_patient
+  period: 0
+  expected: '-0.1559772571746574'
+  rtol: 1.0e-07
+  atol: 1.0e-07
+- id: eps_t-n_c_patient-h7
+  kind: analytic
+  description: Budget-consistent article-mean equilibrium response per unit canonical innovation.
+  source: Independent first-order Dynare reference; tests/fixtures/iacoviello_neri_2010_reference.json.
+    Source reconciliations in spec/model.md.
+  shock: eps_tau_in
+  variable: n_c_patient
+  period: 7
+  expected: '-0.40726970213660624'
+  rtol: 1.0e-07
+  atol: 1.0e-07
+- id: eps_z-c-h0
+  kind: analytic
+  description: Budget-consistent article-mean equilibrium response per unit canonical innovation.
+  source: Independent first-order Dynare reference; tests/fixtures/iacoviello_neri_2010_reference.json.
+    Source reconciliations in spec/model.md.
+  shock: eps_z_in
+  variable: c
+  period: 0
+  expected: '0.22276235589853804'
+  rtol: 1.0e-07
+  atol: 1.0e-07
+- id: eps_z-c-h7
+  kind: analytic
+  description: Budget-consistent article-mean equilibrium response per unit canonical innovation.
+  source: Independent first-order Dynare reference; tests/fixtures/iacoviello_neri_2010_reference.json.
+    Source reconciliations in spec/model.md.
+  shock: eps_z_in
+  variable: c
+  period: 7
+  expected: '0.10722550476549783'
+  rtol: 1.0e-07
+  atol: 1.0e-07
+- id: eps_p-pi-h0
+  kind: analytic
+  description: Budget-consistent article-mean equilibrium response per unit canonical innovation.
+  source: Independent first-order Dynare reference; tests/fixtures/iacoviello_neri_2010_reference.json.
+    Source reconciliations in spec/model.md.
+  shock: eps_p_in
+  variable: pi
+  period: 0
+  expected: '0.7303974793600809'
+  rtol: 1.0e-07
+  atol: 1.0e-07
+- id: eps_p-pi-h7
+  kind: analytic
+  description: Budget-consistent article-mean equilibrium response per unit canonical innovation.
+  source: Independent first-order Dynare reference; tests/fixtures/iacoviello_neri_2010_reference.json.
+    Source reconciliations in spec/model.md.
+  shock: eps_p_in
+  variable: pi
+  period: 7
+  expected: '-0.07354494246865963'
+  rtol: 1.0e-07
+  atol: 1.0e-07
+- id: eps_e-i-h0
+  kind: analytic
+  description: Budget-consistent article-mean equilibrium response per unit canonical innovation.
+  source: Independent first-order Dynare reference; tests/fixtures/iacoviello_neri_2010_reference.json.
+    Source reconciliations in spec/model.md.
+  shock: eps_R_in
+  variable: i
+  period: 0
+  expected: '0.39306295588328716'
+  rtol: 1.0e-07
+  atol: 1.0e-07
+- id: eps_e-i-h7
+  kind: analytic
+  description: Budget-consistent article-mean equilibrium response per unit canonical innovation.
+  source: Independent first-order Dynare reference; tests/fixtures/iacoviello_neri_2010_reference.json.
+    Source reconciliations in spec/model.md.
+  shock: eps_R_in
+  variable: i
+  period: 7
+  expected: '-0.025199670412195688'
+  rtol: 1.0e-07
+  atol: 1.0e-07
+- id: eps_s-pi-h0
+  kind: analytic
+  description: Budget-consistent article-mean equilibrium response per unit canonical innovation.
+  source: Independent first-order Dynare reference; tests/fixtures/iacoviello_neri_2010_reference.json.
+    Source reconciliations in spec/model.md.
+  shock: eps_s_in
+  variable: pi
+  period: 0
+  expected: '2.742031894892629'
+  rtol: 1.0e-07
+  atol: 1.0e-07
+- id: eps_s-pi-h7
+  kind: analytic
+  description: Budget-consistent article-mean equilibrium response per unit canonical innovation.
+  source: Independent first-order Dynare reference; tests/fixtures/iacoviello_neri_2010_reference.json.
+    Source reconciliations in spec/model.md.
+  shock: eps_s_in
+  variable: pi
+  period: 7
+  expected: '4.506764303742824'
+  rtol: 1.0e-07
+  atol: 1.0e-07

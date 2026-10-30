@@ -1,0 +1,106 @@
+id: internal-habit-consumption-in
+kind: friction
+summary: Internal, household-specific habits. The continuation marginal utility carries the future preference
+  shock, unlike a computational reference which factors the current shock outside both terms.
+citation:
+  authors:
+  - Iacoviello
+  - Neri
+  year: 2010
+  title: 'Housing Market Spillovers: Evidence from an Estimated DSGE Model'
+  journal: 'American Economic Journal: Macroeconomics 2(2), 125-164'
+  doi: 10.1257/mac.2.2.125
+variables:
+  provides: []
+  requires:
+  - a_z_in
+  - c_impatient
+  - c_patient
+  - uc_impatient
+  - uc_patient
+parameters:
+- name: habit_patient
+  description: Internal consumption habit for patient households
+  default: 0.32
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: beta
+    hyperparameters:
+    - 0.5
+    - 0.075
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: habit_impatient
+  description: Internal consumption habit for impatient households
+  default: 0.58
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: beta
+    hyperparameters:
+    - 0.5
+    - 0.075
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+equations:
+- id: internal-habit-patient
+  expr: (1-beta_patient*habit_patient)*uc_patient-a_z_in+beta_patient*habit_patient*a_z_in(+1)+((1+beta_patient*habit_patient**2/in_growth_y)*c_patient-habit_patient/in_growth_y*c_patient(-1)-beta_patient*habit_patient*c_patient(+1))/(1-habit_patient/in_growth_y)
+  description: Marginal utility internalises the next-period habit effect, including next-period preference
+    weight.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Equations (1)-(2), printed p.128
+  derivation: docs/theory/consumption-and-capital.md#in-internal-habits
+- id: internal-habit-impatient
+  expr: (1-beta_impatient*habit_impatient)*uc_impatient-a_z_in+beta_impatient*habit_impatient*a_z_in(+1)+((1+beta_impatient*habit_impatient**2/in_growth_y)*c_impatient-habit_impatient/in_growth_y*c_impatient(-1)-beta_impatient*habit_impatient*c_impatient(+1))/(1-habit_impatient/in_growth_y)
+  description: Marginal utility internalises the next-period habit effect, including next-period preference
+    weight.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Equations (1)-(2), printed p.128
+  derivation: docs/theory/consumption-and-capital.md#in-internal-habits
+shocks: []
+replaces:
+- core-housing-in.marginal-utility-no-habit-patient
+- core-housing-in.marginal-utility-no-habit-impatient
+depends_on:
+- core-housing-in
+incompatible_with: []
+compatible_cores:
+- core-housing-in
+minimum_perturbation_order: 1
+equation_form: log-linear-deviations
+solution_requirement: First-order local solution around the balanced-growth path. The collateral multiplier
+  remains strictly positive.
+assumptions:
+- id: stationary-local-equilibrium
+  status: canonical
+  embodied_in:
+  - internal-habit-patient
+  - internal-habit-impatient
+  statement: Variables are stationary log deviations from the deterministic balanced-growth path; household-specific
+    discounting and sector-specific trends are retained.
+  substituting: An occasionally binding constraint or nonlinear global solution requires a separate specification.
+- id: internal-household-habits
+  status: canonical
+  embodied_in:
+  - internal-habit-patient
+  - internal-habit-impatient
+  statement: Each household internalises the effect of current consumption on its future habit stock,
+    including the future preference weight in continuation marginal utility.
+  substituting: External habits omit this continuation derivative and require different Euler and marginal
+    utility relations.
+verification:
+  reviewed_by: null
+  notes: Internal, household-specific habits. The continuation marginal utility carries the future preference
+    shock, unlike a computational reference which factors the current shock outside both terms.
+  open_questions: []
+provenance:
+  license: Own implementation derived from the published equations
+  redistributable: true
+  permission_note: No external replication source or dataset is incorporated.

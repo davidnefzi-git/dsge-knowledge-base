@@ -195,3 +195,128 @@ Growth also enters the steady-state ratios: the investment-to-capital ratio is $
 - Christiano, L., M. Eichenbaum and C. Evans (2005). Nominal rigidities and the dynamic effects of a shock to monetary policy. *Journal of Political Economy* 113(1), 1–45.
 - Del Negro, M. and F. Schorfheide (2012). Notes on New-Keynesian models.
 - Smets, F. and R. Wouters (2007). Shocks and frictions in US business cycles. *American Economic Review* 97(3), 586–606.
+
+## 8. Iacoviello and Neri: internal habits
+
+### IN internal habits
+
+**Anchor: `in-internal-habits`.**
+
+This section uses Iacoviello and Neri (2010), equations (1)–(2), printed
+pp. 128–129 (one-based physical PDF pp. 4–5). It concerns the separable logarithmic
+consumption term in their two-household housing economy. The external-habit
+Smets–Wouters derivation above remains a different mechanism.
+
+For household type $j$, differentiating expected lifetime utility with respect to
+$c_{jt}$ gives
+
+$$
+u^j_{c,t}=\Gamma_j\left[\frac{z_t}{c_{jt}-e_jc_{j,t-1}}
+-\beta_jG_Ce_jE_t\frac{z_{t+1}}{c_{j,t+1}-e_jc_{jt}}\right].
+$$
+
+Today's consumption changes tomorrow's habit stock. The continuation derivative
+therefore contains $z_{t+1}$, since the preference shock multiplies tomorrow's
+utility. Factoring $z_t$ outside both terms, as in the numerical reference,
+changes the preference-shock transmission and is a source-code discrepancy.
+
+Let $g=G_C$, let unadorned lower-case variables in the next equation denote log
+deviations from the stationary steady state, and let $z_t$ denote the log
+preference deviation. Stationarisation and first-order expansion give
+
+$$
+(1-\beta_je_j)u^j_{c,t}-z_t+\beta_je_jE_tz_{t+1}
++\frac{(1+\beta_je_j^2/g)c_{jt}-(e_j/g)c_{j,t-1}
+-\beta_je_jE_tc_{j,t+1}}{1-e_j/g}=0.
+$$
+
+Keeping $u_c^j$ as an auxiliary variable permits all component equations to use
+one-period leads and lags. Eliminating it into the bond Euler equation introduces
+an additional consumption lead. At $e_j=0$ the margin becomes
+$u^j_{c,t}=z_t-c_{jt}$, preserving the preference shock.
+
+## 9. Iacoviello and Neri: capital-stock adjustment
+
+### IN capital adjustment
+
+**Anchor: `in-capital-adjustment`.**
+
+The primary source is Appendix B, equations B4–B5 and the adjustment-cost function
+on printed pp. 160,162 (PDF pp. 36,38). The cost concerns changes in the capital
+stock relative to its balanced-growth path. For sector $s$ with gross capital
+growth $G_s$ and price $P^K_{st}$, its structure is
+
+$$
+\phi_{st}=\frac{\phi_s}{2G_s}
+\left(\frac{k_{st}}{k_{s,t-1}}-G_s\right)^2P^K_{st}k_{s,t-1}.
+$$
+
+For nonhousing capital the deterministic trend in $P^K_{ct}$ is the inverse
+investment-specific technology trend; construction capital is priced in goods.
+The optimum equates current marginal acquisition and adjustment costs to the
+expected rental, resale and next-period adjustment benefit. Rental income is net
+of utilisation costs, as in the full patient budget.
+
+With stationary log deviations $k_s$, marginal utility $u_c^p$, technology $a_k$
+and rental rates $r_s$, define $G_K$ for nonhousing capital and $G_C$ for
+construction capital. The two first-order conditions are
+
+$$
+\begin{aligned}
+0={}&u^p_{c,t}-a_{kt}+\phi_c(k_{ct}-k_{c,t-1})-E_tu^p_{c,t+1}
+-\frac{\beta_pG_C}{G_K}\bar R_cE_tr_{ct+1}\\
+&+\frac{\beta_pG_C}{G_K}(1-\delta_{kc})E_ta_{k,t+1}
+-\beta_pG_C\phi_cE_t(k_{c,t+1}-k_{ct}),
+\end{aligned}
+$$
+
+$$
+0=u^p_{c,t}+\phi_h(k_{ht}-k_{h,t-1})-E_tu^p_{c,t+1}
+-\beta_p\bar R_hE_tr_{ht+1}
+-\beta_pG_C\phi_hE_t(k_{h,t+1}-k_{ht}).
+$$
+
+The direct utilisation derivative cancels between gross rental services and the
+utilisation cost because $a_s'(1)$ equals the rental value. Keeping a positive
+utilisation term in these net-return equations would violate the household
+optimum even if gross firm payments were accounted for correctly elsewhere.
+
+Capital accumulation is a stock-flow identity. Its stationary first-order form
+is $G_s k_{st}=(1-\delta_s)k_{s,t-1}+(G_s-1+\delta_s)i_{st}$.
+At zero adjustment costs the two displayed optimality conditions remain finite;
+the no-adjustment margins follow by setting $\phi_s=0$.
+
+## 10. Iacoviello and Neri: sectoral utilisation
+
+### IN utilisation
+
+**Anchor: `in-utilisation`.**
+
+Appendix B defines, for each sector, a quadratic utilisation function normalised by
+its steady rental rate:
+
+$$
+a_s(z)=\bar R_s\left[\frac{\varpi}{2}z^2+(1-\varpi)z+
+\frac{\varpi}{2}-1\right],\qquad
+\zeta=\frac{\varpi}{1+\varpi}.
+$$
+
+Thus $a_s(1)=0$, $a'_s(1)=\bar R_s$ and
+$a''_s(1)=\bar R_s\varpi$. B9–B10 give
+$R_{ct}A_{kt}=a'_c(z_{ct})$ and $R_{ht}=a'_h(z_{ht})$.
+Their linear forms are
+
+$$
+\widehat z_{ct}=\frac{1-\zeta}{\zeta}(\widehat R_{ct}+\widehat A_{kt}),
+\qquad \widehat z_{ht}=\frac{1-\zeta}{\zeta}\widehat R_{ht}.
+$$
+
+Multiplying through by $\zeta$ makes the fixed-utilisation limit $\zeta=1$
+regular. The costless limit $\zeta=0$ instead removes curvature and should not be
+used as an ordinary interior calibration. The utilisation costs retained in the
+full household budget also enter the budget-consistent goods resource identity;
+see [two-sector aggregation](two-sector-housing-production.md#market-clearing-and-expenditure-aggregation).
+
+Reference: Iacoviello, M., and S. Neri (2010). Housing Market Spillovers: Evidence
+from an Estimated DSGE Model. *American Economic Journal: Macroeconomics* 2(2),
+125–164. [doi:10.1257/mac.2.2.125](https://doi.org/10.1257/mac.2.2.125).

@@ -160,3 +160,59 @@ The last row is the important one. These components describe monopolistic wage s
 
 - Galí, J. (2015). *Monetary Policy, Inflation, and the Business Cycle*, 2nd ed., chapter 6.
 - Smets, F. and R. Wouters (2007). Shocks and frictions in US business cycles. *American Economic Review* 97(3), 586–606.
+
+## Iacoviello and Neri: four sectoral wage equations
+
+### IN sectoral wages
+
+**Anchor: `in-sectoral-wages`.**
+
+Iacoviello and Neri (2010), Section I.C and B29–B32, printed pp. 132 and
+161–162 (one-based physical PDF pp. 8 and 37–38), distinguishes four labour
+unions, one for each household/sector pair. Within a sector both household types
+share a Calvo nonreset probability $\theta_{ws}$ and indexation rate $\iota_{ws}$.
+Their discount factors differ: $d_j=\beta_jG_C$.
+
+Unions buy homogeneous household labour, differentiate it, and sell it through
+labour packers. The gross union markup satisfies
+$u^j_{c,t}w_{js,t}=u^j_{n_s,t}X_{w,js,t}$.
+Indexation is to lagged goods-price inflation. With
+$\omega_{js,t}=\widehat w_{js,t}-\widehat w_{js,t-1}+\pi_t$, the four wage curves
+have the common form
+
+$$
+\omega_{js,t}-\iota_{ws}\pi_{t-1}
+=d_jE_t(\omega_{js,t+1}-\iota_{ws}\pi_t)
+-\kappa_{w,js}x_{w,js,t},
+$$
+
+$$
+\kappa_{w,js}=\frac{(1-\theta_{ws})(1-d_j\theta_{ws})}{\theta_{ws}}.
+$$
+
+The real-wage form stored in the components follows by substituting the nominal
+wage-inflation identity and collecting terms:
+
+$$
+(1+d_j)w_{js,t}-w_{js,t-1}-d_jE_tw_{js,t+1}
++(1+d_j\iota_{ws})\pi_t-\iota_{ws}\pi_{t-1}
+-d_jE_t\pi_{t+1}+\kappa_{w,js}x_{w,js,t}=0.
+$$
+
+The printed expression for the patient housing-wage slope on p. 162 repeats the
+consumption-sector symbol $\theta_{wc}$. The sectoral reset problem and B31 instead
+require $\theta_{wh}$: the housing wage contract survives with the housing
+nonreset probability. This entry uses $\theta_{wh}$ in both household types'
+housing slopes, as does the numerical reference, and records the apparent printed
+symbol inconsistency. That adjudication is a derivation from the stated contracts;
+it does not silently treat the printed formula as correct.
+
+A larger wage markup reduces wage inflation conditional on other terms. Profit
+rebates from each union belong to its household type and restore gross labour
+income in that type's budget. Aggregating wages for empirical wage inflation
+requires explicit steady nominal-wage weights and must not be confused with the
+constant household income weights in the production labour composite.
+
+Reference: Iacoviello, M., and S. Neri (2010). Housing Market Spillovers: Evidence
+from an Estimated DSGE Model. *American Economic Journal: Macroeconomics* 2(2),
+125–164. [doi:10.1257/mac.2.2.125](https://doi.org/10.1257/mac.2.2.125).
