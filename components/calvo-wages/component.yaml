@@ -1,0 +1,185 @@
+id: calvo-wages
+kind: friction
+friction: Staggered nominal wage setting with a constant reset probability
+summary: >
+  Calvo wage setting. The first component in the library that introduces variables and
+  equations together rather than substituting one equation for another: it brings wage
+  inflation and the real wage gap, their two laws of motion, and a new definition of
+  real marginal cost that displaces the core's flexible-wage condition. That is the
+  general shape of a friction block — the financial accelerator, labour search and
+  housing all work this way — so this component is the pattern for everything after it.
+
+citation:
+  authors: [Gali]
+  year: 2015
+  title: "Monetary Policy, Inflation, and the Business Cycle, 2nd ed., chapter 6"
+  journal: "Princeton University Press"
+  doi: null
+  url: null
+
+variables:
+  # Unlike the pricing components, this one DOES provide variables: wage inflation and
+  # the real wage gap exist only once wages are sticky.
+  provides: [pi_w, omega_tilde]
+  requires: [x, pi, mc, a]
+
+parameters:
+  - name: theta_w
+    symbol: "θ_w"
+    description: Probability that a nominal wage is NOT reset in a given quarter
+    default: 0.75
+    units: null
+    frequency: quarterly
+    range: [0.0, 0.95]
+    method: estimated
+    source: "Gali (2015) ch. 6: theta_w = 3/4, an average wage duration of one year. Equal to theta_p at this calibration, which is a coincidence of the book's choice and not a constraint."
+    prior:
+      family: beta
+      hyperparameters: [0.5, 0.1]
+      bounds: [0.0, 0.95]
+      fixed: false
+      note: "hyperparameters are mean and standard deviation"
+  - name: epsilon_w
+    symbol: "ε_w"
+    description: Elasticity of substitution across labour types
+    default: 4.5
+    units: null
+    frequency: none
+    range: [2.0, 20.0]
+    method: calibrated
+    source: >
+      Galí (2015), chapter 6, p. 170; the substitution elasticity is distinct from the goods-market elasticity and determines the wage Phillips-curve slope.
+  - name: lambda_w
+    description: Coefficient on the wage markup gap in the wage Phillips curve
+    default: null
+    units: null
+    frequency: none
+    method: derived
+    source: "Gali (2015) ch. 6, p. 170, definition of lambda_w"
+    formula: "(1 - theta_w)*(1 - beta*theta_w)/(theta_w*(1 + epsilon_w*varphi))"
+  - name: psi_wa
+    description: Elasticity of the natural real wage to technology
+    default: null
+    units: null
+    frequency: none
+    method: derived
+    source: "Gali (2015) ch. 6, p. 171, natural real wage. Equivalent to (1 - alpha*psi_ya)/(1 - alpha)."
+    formula: "1 - alpha*(psi_ya - 1)/(1 - alpha)"
+
+equations:
+  - id: wage-pc
+    status: original
+    source_check: verified_primary
+    derivation: "docs/theory/wage-setting.md#wage-phillips-curve"
+    expr: "pi_w - beta*pi_w(+1) - lambda_w*((sigma + varphi/(1 - alpha))*x - omega_tilde)"
+    description: >
+      Wage Phillips curve. The bracket is minus the wage markup gap: the wage markup is
+      the real wage less the marginal rate of substitution, and the gap between the
+      marginal rate of substitution and its natural level is (sigma + varphi/(1-alpha))
+      times the output gap.
+    source: "Galí (2015), ch. 6, eqs. (15), (19)-(20); checked against the supplied original chapter. Eq. (22) is the dynamic IS curve."
+  - id: real-wage-gap
+    status: derived
+    source_check: verified_primary
+    derivation: "docs/theory/wage-setting.md#real-wage-gap"
+    expr: "omega_tilde - omega_tilde(-1) - pi_w + pi + psi_wa*(a - a(-1))"
+    description: >
+      Identity linking the real wage gap to the two inflation rates: the real wage grows
+      at wage inflation less price inflation, and its natural level grows with
+      technology. This is the equation that makes the two frictions interact rather than
+      merely coexist, and the lag on omega_tilde is what gives the two-friction model
+      its own state.
+    source: "Galí (2015), ch. 6, eq. (21), primary source checked."
+  - id: mc-sticky-wage
+    status: derived
+    source_check: verified_primary
+    derivation: "docs/theory/wage-setting.md#marginal-cost-sticky-wage"
+    expr: "mc - omega_tilde - (alpha/(1 - alpha))*x"
+    description: >
+      Real marginal cost when wages are sticky: the real wage gap plus the
+      decreasing-returns term in the output gap. Replaces the core's flexible-wage
+      condition, which is the special case obtained when the wage markup gap is held
+      at zero.
+    source: "Gali (2015) ch. 6, p. 171-172 (markup definition)"
+
+replaces: [core-nk-classical.flex-wage-mc]
+depends_on: [core-nk-classical]
+# Alternative wage-setting mechanisms cannot be selected simultaneously.
+incompatible_with: [calvo-wages-kimball]
+compatible_cores: [core-nk-classical]
+minimum_perturbation_order: 1
+solution_requirement: "First order for dynamics. Welfare analysis requiring a second-order or linear-quadratic treatment is outside this component."
+
+nesting_target:
+  parameter: theta_w
+  limit: 0
+  recovers: [core-nk-classical, calvo-prices, taylor-rule]
+  statement: >
+    As theta_w goes to zero every wage is reset each quarter, the wage markup gap is
+    held at zero, and real marginal cost collapses back to
+    (sigma + (varphi + alpha)/(1 - alpha)) times the output gap — the core's
+    flexible-wage condition. The composed model must then reproduce
+    nk-gali-2015-ch3, which is the first time in this library that a nesting limit is
+    another entry whose own golden targets are already verified rather than an
+    abstract special case.
+    No analytic rate is declared: deriving the constant means perturbing the whole
+    three-equation system in theta_w, and it would buy little here, because the exact
+    limiting value is pinned independently by the closed-form target
+    flexible-wage-limit-output-gap on nk-gali-2015-ch6. That target is the stronger check, so
+    this one tests only that the approach is monotone and reaches the limit.
+  tolerance: 1.0e-4
+  # The gap closes linearly in theta_w, so reaching 1e-4 needs theta_w of order 1e-6:
+  # at 1e-4 the residual is still 9.2e-4. Recorded here because the sequence a
+  # component needs is a property of its own convergence rate, not a convention.
+  rate: null
+  pathological: false
+  probe:
+    shock: eps_v
+    variable: x
+    period: 0
+    sequence: [0.1, 0.01, 1.0e-4, 1.0e-6]
+
+assumptions:
+  - id: monopolistic-labour-supply
+    status: canonical
+    embodied_in: [wage-pc, mc-sticky-wage]
+    statement: >
+      Households supply differentiated labour services and set wages as monopolistic
+      competitors. Unemployment plays no part: the wage markup is a gap between the real
+      wage and a marginal rate of substitution.
+    substituting: >
+      A search-and-matching block is not a substitute for this one. It is a different
+      theory of the same object, and composing the two would put two wage-setting
+      mechanisms in one model.
+  - id: constant-reset-hazard
+    status: canonical
+    embodied_in: [wage-pc]
+    statement: >
+      Wages are reset with a constant, history-independent probability, as prices are in
+      calvo-prices.
+    substituting: >
+      As for prices: contract structures other than Calvo's break the aggregation step.
+  - id: real-wage-carries-history
+    status: canonical
+    embodied_in: [real-wage-gap]
+    statement: >
+      The real wage is a ratio of two sticky nominal levels, so the wage markup gap is an
+      endogenous state and enters its own law of motion with a lag.
+    substituting: >
+      A component treating the gap as purely contemporaneous assembles cleanly and
+      produces a model with no wage dynamics at all. taxonomy/variables.yaml records the
+      timing for that reason.
+
+verification:
+  reviewed_by: null
+  notes: >
+    Galí (2015), chapter 6 wage-setting block.
+
+  open_questions:
+
+provenance:
+  source_url: null
+  repository: null
+  license: "Own implementation from Galí (2015), chapter 6"
+  redistributable: true
+  permission_note: null
