@@ -1,0 +1,90 @@
+id: sectoral-capital-utilisation-in
+kind: friction
+summary: Separate sectoral utilisation choices share the published curvature; goods-sector efficiency
+  also enters its effective rental condition.
+citation:
+  authors:
+  - Iacoviello
+  - Neri
+  year: 2010
+  title: 'Housing Market Spillovers: Evidence from an Estimated DSGE Model'
+  journal: 'American Economic Journal: Macroeconomics 2(2), 125-164'
+  doi: 10.1257/mac.2.2.125
+variables:
+  provides: []
+  requires:
+  - a_k_in
+  - rk_c
+  - rk_h
+  - u_c
+  - u_h
+parameters:
+- name: zeta_in
+  description: Bounded utilisation curvature varpi/(1+varpi)
+  default: 0.69
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: beta
+    hyperparameters:
+    - 0.5
+    - 0.2
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+equations:
+- id: utilisation-c
+  expr: zeta_in*u_c-(1-zeta_in)*(rk_c+a_k_in)
+  description: Utilisation equates the marginal resource cost to the sectoral effective rental rate.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B9-B10 and utilisation cost definition, printed pp.160,162
+  derivation: docs/theory/consumption-and-capital.md#in-utilisation
+- id: utilisation-h
+  expr: zeta_in*u_h-(1-zeta_in)*(rk_h)
+  description: Utilisation equates the marginal resource cost to the sectoral effective rental rate.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B9-B10 and utilisation cost definition, printed pp.160,162
+  derivation: docs/theory/consumption-and-capital.md#in-utilisation
+shocks: []
+replaces:
+- core-housing-in.fixed-utilisation-c
+- core-housing-in.fixed-utilisation-h
+depends_on:
+- core-housing-in
+incompatible_with: []
+compatible_cores:
+- core-housing-in
+minimum_perturbation_order: 1
+equation_form: log-linear-deviations
+solution_requirement: First-order local solution around the balanced-growth path. The collateral multiplier
+  remains strictly positive.
+assumptions:
+- id: stationary-local-equilibrium
+  status: canonical
+  embodied_in:
+  - utilisation-c
+  - utilisation-h
+  statement: Variables are stationary log deviations from the deterministic balanced-growth path; household-specific
+    discounting and sector-specific trends are retained.
+  substituting: An occasionally binding constraint or nonlinear global solution requires a separate specification.
+- id: utilisation-is-a-resource-cost
+  status: canonical
+  embodied_in:
+  - utilisation-c
+  - utilisation-h
+  statement: The resource cost satisfies a(1)=0 and a′(1) equal to the steady effective rental rate. Net-return
+    derivatives therefore cancel direct utilisation effects in capital Euler equations.
+  substituting: Omitting these costs changes both household resources and net capital returns at first
+    order.
+verification:
+  reviewed_by: null
+  notes: Separate sectoral utilisation choices share the published curvature; goods-sector efficiency
+    also enters its effective rental condition.
+  open_questions: []
+provenance:
+  license: Own implementation derived from the published equations
+  redistributable: true
+  permission_note: No external replication source or dataset is incorporated.

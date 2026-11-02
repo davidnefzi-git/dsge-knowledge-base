@@ -1,0 +1,134 @@
+id: iacoviello-neri-2010
+name: Housing market spillovers (Iacoviello and Neri 2010)
+family: monetary-dsge
+summary: >
+  An estimated two-household, two-sector monetary model with housing-backed borrowing,
+  fixed land, internal consumption habits, sectoral capital and nominal rigidities.
+  First-order dynamics use a budget-consistent reading of the published household
+  optimality conditions. The resource equation, preference-shock timing and housing
+  wage slope reconciliations are explicit in the theoretical specification.
+
+composition:
+  core: core-housing-in
+  blocks:
+    - housing-collateral-in
+    - internal-habit-consumption-in
+    - capital-stock-adjustment-in
+    - sectoral-capital-utilisation-in
+    - calvo-prices-indexation-in
+    - sectoral-calvo-wages-in
+    - taylor-rule-in
+
+citation:
+  authors: [Iacoviello, Neri]
+  year: 2010
+  title: "Housing Market Spillovers: Evidence from an Estimated DSGE Model"
+  journal: "American Economic Journal: Macroeconomics 2(2), 125-164"
+  doi: 10.1257/mac.2.2.125
+
+estimation_reference:
+  publication: "American Economic Journal: Macroeconomics 2(2), 125-164"
+  specification: estimation.yaml
+  interpretation: spec/estimation.md
+  status: "Published estimation reference; the library does not perform Bayesian estimation."
+
+economics:
+  question: >
+    Which shocks drive US housing prices and residential construction, and how does
+    housing collateral transmit those shocks to household consumption?
+  time: dynamic-stochastic
+  uncertainty: aggregate
+  open_economy: false
+  agents:
+    - patient households owning capital and land
+    - impatient households borrowing against housing
+    - competitive housing and nonhousing producers
+    - monopolistically competitive retailers and labour unions
+    - central bank
+  equilibrium: >
+    Balanced-growth equilibrium with a locally binding borrower collateral constraint.
+    All runnable equations are first-order stationary log deviations. The GDP measure
+    is the expenditure aggregate of footnote 15; household budget consistency retains
+    the utilisation costs specified in B1 and the capital optimality conditions.
+  frictions:
+    - housing collateral constraint
+    - internal habits in consumption
+    - imperfect sectoral labour substitutability
+    - capital-stock adjustment costs
+    - variable capital utilisation costs
+    - staggered retail prices with indexation
+    - household and sector specific staggered wages with indexation
+  mechanisms:
+    - financial-accelerator
+    - input-output-linkages
+    - capital-accumulation
+    - nominal-rigidity
+    - real-rigidity
+    - monetary-transmission
+  policy_instruments: [nominal interest rate]
+  calibration_region: United States
+
+common_variable_map:
+  output: "100*y"
+  consumption: "100*c"
+  investment: "100*inv"
+  inflation: "100*pi"
+  policy_rate: "100*i"
+  hours: "100*n"
+  real_wage: "100*w"
+
+shocks:
+  - id: eps_c_in
+    description: Nonhousing technology innovation
+    normalisation: one unit of log labour-augmenting technology
+  - id: eps_h_in
+    description: Housing technology innovation
+    normalisation: one unit of log labour-augmenting technology
+  - id: eps_k_in
+    description: Investment-specific technology innovation
+    normalisation: one unit of log investment efficiency
+  - id: eps_j_in
+    description: Housing preference innovation
+    normalisation: one unit of log housing preference weight
+  - id: eps_tau_in
+    description: Labour supply innovation
+    normalisation: one unit of log labour disutility weight
+  - id: eps_z_in
+    description: Intertemporal preference innovation
+    normalisation: one unit of log utility weight
+  - id: eps_p_in
+    description: Cost-push innovation
+    normalisation: one unit in quarterly log inflation equation
+  - id: eps_R_in
+    description: Monetary policy innovation
+    normalisation: one unit in quarterly log policy rate, positive contractionary
+  - id: eps_s_in
+    description: Persistent inflation-objective innovation
+    normalisation: >
+      One unit of the natural log target disturbance; enters the policy rule with
+      negative sign. A reference convention that scales this state by 100 requires a
+      correspondingly rescaled innovation.
+
+verification:
+  tier: composed
+  notes: >
+    Defaults are the published full-sample posterior means at their printed precision.
+    Quantities are log deviations; common-variable mappings convert to percent and
+    keep rates quarterly. Investment denotes business investment; residential
+    investment and real house prices are separately available as inv_h and q_h.
+    No flexible-price output gap or credit spread is imposed. Independent reference
+    comparisons use matching coefficients and the same documented budget-consistent
+    interpretation, rather than asserting equivalence to every printed equation or
+    every convention in public numerical reference code.
+  open_questions:
+    - "The article's Bayesian posterior, historical decompositions and subsample estimation are reference evidence, not reproduced estimates."
+    - "The printed aggregate resource equation omits utilisation expenditures present in the household budget. This entry follows the household budget and labels that reconciliation explicitly."
+    - "An occasionally binding collateral constraint and second-order welfare analysis require different solution methods."
+    - "Exact historical raw-data vintages and the full estimation appendix are needed for empirical replication."
+
+provenance:
+  license: Own equations and derivations from the published article
+  permission_note: >
+    External model source files, the published PDF and estimation observations are not
+    redistributed. Numerical reference quantities are separately attributed and their
+    scientific conventions are recorded.

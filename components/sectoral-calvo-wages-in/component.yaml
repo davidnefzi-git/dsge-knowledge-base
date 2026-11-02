@@ -1,0 +1,160 @@
+id: sectoral-calvo-wages-in
+kind: friction
+summary: Patient housing wage slope uses housing-sector theta throughout. The printed epsilon_wh formula
+  instead contains theta_wc, apparently a typographical inconsistency; the sector-specific derivation
+  resolves it.
+citation:
+  authors:
+  - Iacoviello
+  - Neri
+  year: 2010
+  title: 'Housing Market Spillovers: Evidence from an Estimated DSGE Model'
+  journal: 'American Economic Journal: Macroeconomics 2(2), 125-164'
+  doi: 10.1257/mac.2.2.125
+variables:
+  provides: []
+  requires:
+  - pi
+  - w_c_impatient
+  - w_c_patient
+  - w_h_impatient
+  - w_h_patient
+  - xw_c_impatient
+  - xw_c_patient
+  - xw_h_impatient
+  - xw_h_patient
+parameters:
+- name: theta_w_c_in
+  description: Sector c nominal wage nonreset probability
+  default: 0.79
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: beta
+    hyperparameters:
+    - 0.667
+    - 0.05
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: iota_w_c_in
+  description: Sector c wage indexation to lagged price inflation
+  default: 0.08
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: beta
+    hyperparameters:
+    - 0.5
+    - 0.2
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: theta_w_h_in
+  description: Sector h nominal wage nonreset probability
+  default: 0.91
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: beta
+    hyperparameters:
+    - 0.667
+    - 0.05
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: iota_w_h_in
+  description: Sector h wage indexation to lagged price inflation
+  default: 0.4
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: beta
+    hyperparameters:
+    - 0.5
+    - 0.2
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+equations:
+- id: wage-c-patient
+  expr: theta_w_c_in*(w_c_patient-w_c_patient(-1)+pi-iota_w_c_in*pi(-1)-beta_patient*in_growth_y*(w_c_patient(+1)-w_c_patient+pi(+1)-iota_w_c_in*pi))+(1-theta_w_c_in)*(1-beta_patient*in_growth_y*theta_w_c_in)*xw_c_patient
+  description: Household-sector nominal wage inflation with sectoral indexation and household discounting.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B29-B32, printed pp.161-162
+  derivation: docs/theory/wage-setting.md#in-sectoral-wages
+- id: wage-c-impatient
+  expr: theta_w_c_in*(w_c_impatient-w_c_impatient(-1)+pi-iota_w_c_in*pi(-1)-beta_impatient*in_growth_y*(w_c_impatient(+1)-w_c_impatient+pi(+1)-iota_w_c_in*pi))+(1-theta_w_c_in)*(1-beta_impatient*in_growth_y*theta_w_c_in)*xw_c_impatient
+  description: Household-sector nominal wage inflation with sectoral indexation and household discounting.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B29-B32, printed pp.161-162
+  derivation: docs/theory/wage-setting.md#in-sectoral-wages
+- id: wage-h-patient
+  expr: theta_w_h_in*(w_h_patient-w_h_patient(-1)+pi-iota_w_h_in*pi(-1)-beta_patient*in_growth_y*(w_h_patient(+1)-w_h_patient+pi(+1)-iota_w_h_in*pi))+(1-theta_w_h_in)*(1-beta_patient*in_growth_y*theta_w_h_in)*xw_h_patient
+  description: Household-sector nominal wage inflation with sectoral indexation and household discounting.
+  status: adapted
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B29-B32, printed pp.161-162
+  derivation: docs/theory/wage-setting.md#in-sectoral-wages
+- id: wage-h-impatient
+  expr: theta_w_h_in*(w_h_impatient-w_h_impatient(-1)+pi-iota_w_h_in*pi(-1)-beta_impatient*in_growth_y*(w_h_impatient(+1)-w_h_impatient+pi(+1)-iota_w_h_in*pi))+(1-theta_w_h_in)*(1-beta_impatient*in_growth_y*theta_w_h_in)*xw_h_impatient
+  description: Household-sector nominal wage inflation with sectoral indexation and household discounting.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B29-B32, printed pp.161-162
+  derivation: docs/theory/wage-setting.md#in-sectoral-wages
+shocks: []
+replaces:
+- core-housing-in.flex-wage-c-patient
+- core-housing-in.flex-wage-h-patient
+- core-housing-in.flex-wage-c-impatient
+- core-housing-in.flex-wage-h-impatient
+depends_on:
+- core-housing-in
+incompatible_with: []
+compatible_cores:
+- core-housing-in
+minimum_perturbation_order: 1
+equation_form: log-linear-deviations
+solution_requirement: First-order local solution around the balanced-growth path. The collateral multiplier
+  remains strictly positive.
+assumptions:
+- id: stationary-local-equilibrium
+  status: canonical
+  embodied_in:
+  - wage-c-patient
+  - wage-c-impatient
+  - wage-h-patient
+  - wage-h-impatient
+  statement: Variables are stationary log deviations from the deterministic balanced-growth path; household-specific
+    discounting and sector-specific trends are retained.
+  substituting: An occasionally binding constraint or nonlinear global solution requires a separate specification.
+- id: four-wage-unions
+  status: canonical
+  embodied_in:
+  - wage-c-patient
+  - wage-c-impatient
+  - wage-h-patient
+  - wage-h-impatient
+  statement: There is a wage union for each household and sector pair. Nonreset probabilities and indexation
+    are common across households within each sector; discount factors remain household specific.
+  substituting: A single wage index or economy-wide reset probability collapses distinct wage-setting
+    conditions.
+verification:
+  reviewed_by: null
+  notes: Patient housing wage slope uses housing-sector theta throughout. The printed epsilon_wh formula
+    instead contains theta_wc, apparently a typographical inconsistency; the sector-specific derivation
+    resolves it.
+  open_questions:
+  - The printed patient housing-wage slope contains consumption-sector stickiness symbols; the derived
+    housing-sector slope is used explicitly.
+provenance:
+  license: Own implementation derived from the published equations
+  redistributable: true
+  permission_note: No external replication source or dataset is incorporated.

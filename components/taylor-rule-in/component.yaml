@@ -1,0 +1,134 @@
+id: taylor-rule-in
+kind: policy
+summary: The expenditure GDP definition follows footnote 15 and the numerical reference, with the difference
+  from Appendix B33 value added stated in the core. Inflation-objective innovations are unscaled.
+citation:
+  authors:
+  - Iacoviello
+  - Neri
+  year: 2010
+  title: 'Housing Market Spillovers: Evidence from an Estimated DSGE Model'
+  journal: 'American Economic Journal: Macroeconomics 2(2), 125-164'
+  doi: 10.1257/mac.2.2.125
+variables:
+  provides:
+  - a_s_in
+  requires:
+  - i
+  - pi
+  - y
+parameters:
+- name: rho_i_in
+  description: Policy rate smoothing
+  default: 0.59
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: beta
+    hyperparameters:
+    - 0.75
+    - 0.1
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: phi_pi_in
+  description: Response to inflation
+  default: 1.44
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: normal
+    hyperparameters:
+    - 1.5
+    - 0.1
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: phi_growth_in
+  description: Response to detrended expenditure GDP growth
+  default: 0.52
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: normal
+    hyperparameters:
+    - 0
+    - 0.1
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: rho_s_in
+  description: Inflation-objective persistence, fixed
+  default: 0.975
+  method: calibrated
+  source: Iacoviello and Neri (2010), Section II.B, calibrated persistence
+  frequency: quarterly
+  units: null
+equations:
+- id: policy-rule
+  expr: i-rho_i_in*i(-1)-(1-rho_i_in)*(phi_pi_in*pi+phi_growth_in*(y-y(-1)))-eps_R_in+a_s_in
+  description: Smoothed nominal rate responds to inflation and expenditure GDP growth; a higher inflation-objective
+    disturbance lowers the rate.
+  status: adapted
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Equation (9) and Appendix B33, printed pp.132,162
+  derivation: docs/theory/two-sector-housing-production.md#aggregation
+- id: inflation-objective
+  expr: a_s_in-rho_s_in*a_s_in(-1)-eps_s_in
+  description: Persistent inflation-objective disturbance in natural log units, with no artificial factor
+    100.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Section I, monetary policy disturbance, and Table 1, printed pp.132,137
+  derivation: docs/theory/two-sector-housing-production.md#balanced-growth
+shocks:
+- id: eps_R_in
+  description: Positive monetary innovation raises the policy rate
+  normalisation: One natural-log unit innovation; reported standard deviations are metadata, not IRF scaling.
+  sign_convention: Positive monetary innovation raises the policy rate
+  sd: 0.0034
+  source: Iacoviello and Neri (2010), Table 4 posterior mean
+- id: eps_s_in
+  description: Positive inflation-objective innovation lowers the policy rate
+  normalisation: One natural-log unit innovation; reported standard deviations are metadata, not IRF scaling.
+  sign_convention: Positive inflation-objective innovation lowers the policy rate
+  sd: 0.0004
+  source: Iacoviello and Neri (2010), Table 4 posterior mean
+replaces: []
+depends_on:
+- core-housing-in
+incompatible_with: []
+compatible_cores:
+- core-housing-in
+minimum_perturbation_order: 1
+equation_form: log-linear-deviations
+solution_requirement: First-order local solution around the balanced-growth path. The collateral multiplier
+  remains strictly positive.
+assumptions:
+- id: stationary-local-equilibrium
+  status: canonical
+  embodied_in:
+  - policy-rule
+  - inflation-objective
+  statement: Variables are stationary log deviations from the deterministic balanced-growth path; household-specific
+    discounting and sector-specific trends are retained.
+  substituting: An occasionally binding constraint or nonlinear global solution requires a separate specification.
+- id: expenditure-growth-rule
+  status: canonical
+  embodied_in:
+  - policy-rule
+  statement: The interest rate reacts to current inflation and expenditure GDP growth rather than a flexible-price
+    output gap.
+  substituting: A gap-based policy requires a distinct natural allocation and a different policy equation.
+verification:
+  reviewed_by: null
+  notes: The expenditure GDP definition follows footnote 15 and the numerical reference, with the difference
+    from Appendix B33 value added stated in the core. Inflation-objective innovations are unscaled.
+  open_questions: []
+provenance:
+  license: Own implementation derived from the published equations
+  redistributable: true
+  permission_note: No external replication source or dataset is incorporated.

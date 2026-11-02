@@ -1,0 +1,1100 @@
+id: core-housing-in
+kind: core
+summary: Stationary two-household, two-sector housing economy with internal loan clearing, fixed land
+  and a locally binding borrower constraint. The patient budget is eliminated by Walras law; goods resources
+  retain utilisation costs. Expenditure GDP follows footnote 15, with the difference from Appendix B33
+  documented.
+citation:
+  authors:
+  - Iacoviello
+  - Neri
+  year: 2010
+  title: 'Housing Market Spillovers: Evidence from an Estimated DSGE Model'
+  journal: 'American Economic Journal: Macroeconomics 2(2), 125-164'
+  doi: 10.1257/mac.2.2.125
+variables:
+  provides:
+  - c_patient
+  - c_impatient
+  - uc_patient
+  - uc_impatient
+  - h_patient
+  - h_impatient
+  - n_c_patient
+  - n_c_impatient
+  - n_h_patient
+  - n_h_impatient
+  - w_c_patient
+  - w_c_impatient
+  - w_h_patient
+  - w_h_impatient
+  - xw_c_patient
+  - xw_c_impatient
+  - xw_h_patient
+  - xw_h_impatient
+  - k_c
+  - k_h
+  - rk_c
+  - rk_h
+  - u_c
+  - u_h
+  - q_h
+  - y_c
+  - inv_h
+  - x_price
+  - pi
+  - i
+  - a_c_in
+  - a_h_in
+  - a_k_in
+  - a_j_in
+  - a_tau_in
+  - a_z_in
+  - c
+  - inv
+  - y
+  - n
+  - w
+  - inv_k_c
+  - inv_k_h
+  requires:
+  - b_borrower
+parameters:
+- name: beta_patient
+  description: Patient-household quarterly discount factor
+  default: 0.9925
+  method: calibrated
+  source: Iacoviello and Neri (2010), Table 1, calibrated parameters
+  frequency: quarterly
+  units: null
+- name: beta_impatient
+  description: Impatient-household quarterly discount factor
+  default: 0.97
+  method: calibrated
+  source: Iacoviello and Neri (2010), Table 1, calibrated parameters
+  frequency: quarterly
+  units: null
+- name: ltv_in
+  description: Maximum loan to expected collateral value
+  default: 0.85
+  method: calibrated
+  source: Iacoviello and Neri (2010), Table 1, calibrated parameters
+  frequency: quarterly
+  units: null
+- name: j_housing
+  description: Steady housing preference weight
+  default: 0.12
+  method: calibrated
+  source: Iacoviello and Neri (2010), Table 1, calibrated parameters
+  frequency: quarterly
+  units: null
+- name: mu_c
+  description: Capital exponent in goods production
+  default: 0.35
+  method: calibrated
+  source: Iacoviello and Neri (2010), Table 1, calibrated parameters
+  frequency: quarterly
+  units: null
+- name: mu_h
+  description: Capital exponent in housing production
+  default: 0.1
+  method: calibrated
+  source: Iacoviello and Neri (2010), Table 1, calibrated parameters
+  frequency: quarterly
+  units: null
+- name: mu_b
+  description: Intermediate-goods exponent in housing production
+  default: 0.1
+  method: calibrated
+  source: Iacoviello and Neri (2010), Table 1, calibrated parameters
+  frequency: quarterly
+  units: null
+- name: mu_land
+  description: Fixed-land exponent in housing production
+  default: 0.1
+  method: calibrated
+  source: Iacoviello and Neri (2010), Table 1, calibrated parameters
+  frequency: quarterly
+  units: null
+- name: delta_k_c
+  description: Goods-sector capital quarterly depreciation
+  default: 0.025
+  method: calibrated
+  source: Iacoviello and Neri (2010), Table 1, calibrated parameters
+  frequency: quarterly
+  units: null
+- name: delta_k_h
+  description: Housing-sector capital quarterly depreciation
+  default: 0.03
+  method: calibrated
+  source: Iacoviello and Neri (2010), Table 1, calibrated parameters
+  frequency: quarterly
+  units: null
+- name: delta_housing
+  description: Housing stock quarterly depreciation
+  default: 0.01
+  method: calibrated
+  source: Iacoviello and Neri (2010), Table 1, calibrated parameters
+  frequency: quarterly
+  units: null
+- name: markup_p_in
+  description: Steady gross goods-price markup
+  default: 1.15
+  method: calibrated
+  source: Iacoviello and Neri (2010), Table 1, calibrated parameters
+  frequency: quarterly
+  units: null
+- name: markup_w_in
+  description: Steady gross wage markup
+  default: 1.15
+  method: calibrated
+  source: Iacoviello and Neri (2010), Table 1, calibrated parameters
+  frequency: quarterly
+  units: null
+- name: alpha_patient
+  description: Patient household share in the labour production composite
+  default: 0.79
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior; reported precision retained
+  frequency: quarterly
+  units: null
+  prior:
+    family: beta
+    hyperparameters:
+    - 0.65
+    - 0.05
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: eta_patient
+  description: Patient aggregate-hours disutility curvature
+  default: 0.52
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior; reported precision retained
+  frequency: quarterly
+  units: null
+  prior:
+    family: gamma
+    hyperparameters:
+    - 0.5
+    - 0.1
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: eta_impatient
+  description: Impatient aggregate-hours disutility curvature
+  default: 0.51
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior; reported precision retained
+  frequency: quarterly
+  units: null
+  prior:
+    family: gamma
+    hyperparameters:
+    - 0.5
+    - 0.1
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: xi_patient
+  description: Patient sectoral labour immobility curvature
+  default: 0.66
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior; reported precision retained
+  frequency: quarterly
+  units: null
+  prior:
+    family: normal
+    hyperparameters:
+    - 1
+    - 0.1
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: xi_impatient
+  description: Impatient sectoral labour immobility curvature
+  default: 0.97
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior; reported precision retained
+  frequency: quarterly
+  units: null
+  prior:
+    family: normal
+    hyperparameters:
+    - 1
+    - 0.1
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: gamma_ac_in
+  description: Deterministic goods productivity log-growth parameter; published 100 gamma transformed
+    to natural units
+  default: 0.0032
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior; reported precision retained
+  frequency: quarterly
+  units: null
+  prior:
+    family: normal
+    hyperparameters:
+    - 0.005
+    - 0.01
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: gamma_ah_in
+  description: Deterministic housing productivity log-growth parameter; published 100 gamma transformed
+    to natural units
+  default: 0.0008
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior; reported precision retained
+  frequency: quarterly
+  units: null
+  prior:
+    family: normal
+    hyperparameters:
+    - 0.005
+    - 0.01
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: gamma_ak_in
+  description: Deterministic investment-specific technology log-growth parameter; published 100 gamma
+    transformed to natural units
+  default: 0.0027
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 3 posterior mean and prior; reported precision retained
+  frequency: quarterly
+  units: null
+  prior:
+    family: normal
+    hyperparameters:
+    - 0.005
+    - 0.01
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: rho_c_in
+  description: Persistence of c disturbance
+  default: 0.95
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 4 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: beta
+    hyperparameters:
+    - 0.8
+    - 0.1
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: rho_h_in
+  description: Persistence of h disturbance
+  default: 0.997
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 4 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: beta
+    hyperparameters:
+    - 0.8
+    - 0.1
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: rho_k_in
+  description: Persistence of k disturbance
+  default: 0.92
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 4 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: beta
+    hyperparameters:
+    - 0.8
+    - 0.1
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: rho_j_in
+  description: Persistence of j disturbance
+  default: 0.96
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 4 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: beta
+    hyperparameters:
+    - 0.8
+    - 0.1
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: rho_tau_in
+  description: Persistence of tau disturbance
+  default: 0.92
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 4 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: beta
+    hyperparameters:
+    - 0.8
+    - 0.1
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: rho_z_in
+  description: Persistence of z disturbance
+  default: 0.96
+  method: estimated
+  source: Iacoviello and Neri (2010), Table 4 posterior mean and prior
+  frequency: quarterly
+  units: null
+  prior:
+    family: beta
+    hyperparameters:
+    - 0.8
+    - 0.1
+    fixed: false
+    note: Prior mean and standard deviation, in the parameter units used here.
+- name: in_growth_y
+  description: Gross quarterly balanced growth of goods output, consumption and housing-sector capital
+  default: null
+  method: derived
+  formula: exp(gamma_ac_in+mu_c/(1-mu_c)*gamma_ak_in)
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_growth_k
+  description: Gross quarterly balanced growth of goods-sector capital and its investment
+  default: null
+  method: derived
+  formula: exp(gamma_ac_in+gamma_ak_in/(1-mu_c))
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_growth_h
+  description: Gross quarterly balanced growth of the housing stock and new homes
+  default: null
+  method: derived
+  formula: exp((1-mu_h-mu_land-mu_b)*gamma_ah_in+(mu_h+mu_b)*gamma_ac_in+mu_c*(mu_h+mu_b)/(1-mu_c)*gamma_ak_in)
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_growth_q
+  description: Gross quarterly balanced growth of the real house price
+  default: null
+  method: derived
+  formula: in_growth_y/in_growth_h
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_growth_ak
+  description: Gross deterministic investment-specific efficiency growth
+  default: null
+  method: derived
+  formula: exp(gamma_ak_in)
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_r_ss
+  description: Steady gross quarterly nominal return at zero inflation
+  default: null
+  method: derived
+  formula: 1/beta_patient
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_rkc_ss
+  description: Steady goods-sector capital rental rate before utilisation and investment-efficiency conversion
+  default: null
+  method: derived
+  formula: in_growth_ak/beta_patient-(1-delta_k_c)
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_rkh_ss
+  description: Steady housing-sector capital rental rate
+  default: null
+  method: derived
+  formula: 1/beta_patient-(1-delta_k_h)
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_net_r
+  description: Steady loan repayment rate net of consumption growth
+  default: null
+  method: derived
+  formula: in_r_ss/in_growth_y-1
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_zeta0
+  description: Steady goods-sector capital to goods-output ratio
+  default: null
+  method: derived
+  formula: beta_patient*in_growth_k*mu_c/(in_growth_ak-beta_patient*(1-delta_k_c))/markup_p_in
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_zeta1
+  description: Steady housing-sector capital divided by the value of residential investment
+  default: null
+  method: derived
+  formula: beta_patient*in_growth_y*mu_h/(1-beta_patient*(1-delta_k_h))
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_zeta2
+  description: Steady patient housing wealth to patient consumption ratio
+  default: null
+  method: derived
+  formula: j_housing/(1-beta_patient*in_growth_q*(1-delta_housing))
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_zeta3
+  description: Steady borrower housing wealth to borrower consumption ratio
+  default: null
+  method: derived
+  formula: j_housing/(1-beta_impatient*in_growth_q*(1-delta_housing)-in_growth_q*(beta_patient-beta_impatient)*ltv_in)
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_zeta4
+  description: Loan servicing coefficient per unit borrower housing wealth
+  default: null
+  method: derived
+  formula: (in_r_ss/in_growth_y-1)*ltv_in*in_growth_q/in_r_ss
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_dh
+  description: Residential investment to housing stock ratio along the balanced-growth path
+  default: null
+  method: derived
+  formula: 1-(1-delta_housing)/in_growth_h
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_dc
+  description: Goods-sector capital investment to current capital ratio along its balanced-growth path
+  default: null
+  method: derived
+  formula: 1-(1-delta_k_c)/in_growth_k
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_dk_h
+  description: Housing-sector capital investment to current capital ratio along its balanced-growth path
+  default: null
+  method: derived
+  formula: 1-(1-delta_k_h)/in_growth_y
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_chi1
+  description: Reduced steady-state household-budget coefficient chi_1 used to solve the two consumption
+    shares
+  default: null
+  method: derived
+  formula: 1+in_dh*in_zeta2*(1-in_net_r*in_zeta1-mu_land-alpha_patient*(1-mu_h-mu_land-mu_b))
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_chi2
+  description: Reduced steady-state household-budget coefficient chi_2 used to solve the two consumption
+    shares
+  default: null
+  method: derived
+  formula: (in_net_r*in_zeta1+mu_land+alpha_patient*(1-mu_h-mu_land-mu_b))*in_dh*in_zeta3+in_zeta4*in_zeta3
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_chi3
+  description: Reduced steady-state household-budget coefficient chi_3 used to solve the two consumption
+    shares
+  default: null
+  method: derived
+  formula: (markup_p_in-1+in_net_r*in_zeta0*markup_p_in+alpha_patient*(1-mu_c))/markup_p_in
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_chi4
+  description: Reduced steady-state household-budget coefficient chi_4 used to solve the two consumption
+    shares
+  default: null
+  method: derived
+  formula: 1+in_dh*in_zeta3*(1-(1-alpha_patient)*(1-mu_h-mu_land-mu_b))+in_zeta4*in_zeta3
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_chi5
+  description: Reduced steady-state household-budget coefficient chi_5 used to solve the two consumption
+    shares
+  default: null
+  method: derived
+  formula: (1-alpha_patient)*(1-mu_h-mu_land-mu_b)*in_dh*in_zeta2
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_chi6
+  description: Reduced steady-state household-budget coefficient chi_6 used to solve the two consumption
+    shares
+  default: null
+  method: derived
+  formula: (1-alpha_patient)*(1-mu_c)/markup_p_in
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_cpy
+  description: Steady patient consumption divided by goods output
+  default: null
+  method: derived
+  formula: (in_chi3*in_chi4+in_chi2*in_chi6)/(in_chi1*in_chi4-in_chi2*in_chi5)
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_ciy
+  description: Steady borrower consumption divided by goods output
+  default: null
+  method: derived
+  formula: (in_chi1*in_chi6+in_chi3*in_chi5)/(in_chi1*in_chi4-in_chi2*in_chi5)
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_qiy
+  description: Steady value of residential investment divided by goods output
+  default: null
+  method: derived
+  formula: in_dh*(in_zeta2*in_cpy+in_zeta3*in_ciy)
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_kcy
+  description: Steady goods-sector capital divided by goods output
+  default: null
+  method: derived
+  formula: in_zeta0
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_khy
+  description: Steady housing-sector capital divided by goods output
+  default: null
+  method: derived
+  formula: in_zeta1*in_qiy
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_qhpy
+  description: Steady patient housing wealth divided by goods output
+  default: null
+  method: derived
+  formula: in_zeta2*in_cpy
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_qhiy
+  description: Steady borrower housing wealth divided by goods output
+  default: null
+  method: derived
+  formula: in_zeta3*in_ciy
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_by
+  description: Steady borrower debt divided by goods output
+  default: null
+  method: derived
+  formula: ltv_in*in_growth_q*in_qhiy/in_r_ss
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_wcpny
+  description: Steady patient goods-sector gross labour income divided by goods output
+  default: null
+  method: derived
+  formula: alpha_patient*(1-mu_c)/markup_p_in
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_wcin_y
+  description: Steady borrower goods-sector gross labour income divided by goods output
+  default: null
+  method: derived
+  formula: (1-alpha_patient)*(1-mu_c)/markup_p_in
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_whpny
+  description: Steady patient housing-sector gross labour income divided by goods output
+  default: null
+  method: derived
+  formula: alpha_patient*(1-mu_h-mu_land-mu_b)*in_qiy
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_whiny
+  description: Steady borrower housing-sector gross labour income divided by goods output
+  default: null
+  method: derived
+  formula: (1-alpha_patient)*(1-mu_h-mu_land-mu_b)*in_qiy
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_cy
+  description: Total household consumption divided by goods output
+  default: null
+  method: derived
+  formula: in_cpy+in_ciy
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_ikcy
+  description: Goods-sector capital investment divided by goods output
+  default: null
+  method: derived
+  formula: in_dc*in_kcy
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_ikhy
+  description: Housing-sector capital investment divided by goods output
+  default: null
+  method: derived
+  formula: in_dk_h*in_khy
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_iky
+  description: Total business investment divided by goods output
+  default: null
+  method: derived
+  formula: in_ikcy+in_ikhy
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_gdpy
+  description: Steady expenditure GDP divided by goods output
+  default: null
+  method: derived
+  formula: in_cy+in_iky+in_qiy
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_hours_ratio
+  description: Ratio of housing to goods labour-disutility CES terms, common to both household types
+  default: null
+  method: derived
+  formula: (1-mu_h-mu_land-mu_b)/(1-mu_c)*markup_p_in*in_qiy
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_labor_h_share
+  description: Housing-sector weight in the marginal labour-disutility composite
+  default: null
+  method: derived
+  formula: in_hours_ratio/(1+in_hours_ratio)
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_nc_p
+  description: Steady patient goods-sector hours
+  default: null
+  method: derived
+  formula: ((1-mu_c)*alpha_patient/in_cpy/markup_p_in/markup_w_in/(1+in_hours_ratio)**((eta_patient-xi_patient)/(1+xi_patient)))**(1/(1+eta_patient))
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_nh_p
+  description: Steady patient housing-sector hours
+  default: null
+  method: derived
+  formula: in_nc_p*in_hours_ratio**(1/(1+xi_patient))
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_nc_i
+  description: Steady borrower goods-sector hours
+  default: null
+  method: derived
+  formula: ((1-mu_c)*(1-alpha_patient)/in_ciy/markup_p_in/markup_w_in/(1+in_hours_ratio)**((eta_impatient-xi_impatient)/(1+xi_impatient)))**(1/(1+eta_impatient))
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_nh_i
+  description: Steady borrower housing-sector hours
+  default: null
+  method: derived
+  formula: in_nc_i*in_hours_ratio**(1/(1+xi_impatient))
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_total_n
+  description: Steady total hours across household types and sectors
+  default: null
+  method: derived
+  formula: in_nc_p+in_nh_p+in_nc_i+in_nh_i
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_total_wn_y
+  description: Steady total gross labour income divided by goods output
+  default: null
+  method: derived
+  formula: in_wcpny+in_wcin_y+in_whpny+in_whiny
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_patient_h_weight
+  description: Patient housing resale weight in the stationary housing Euler condition
+  default: null
+  method: derived
+  formula: beta_patient*in_growth_q*(1-delta_housing)
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_impatient_h_weight
+  description: Borrower housing resale weight in the stationary housing Euler condition
+  default: null
+  method: derived
+  formula: beta_impatient*in_growth_q*(1-delta_housing)
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_collateral_h_weight
+  description: Borrower collateral-service weight in the stationary housing Euler condition
+  default: null
+  method: derived
+  formula: ltv_in*in_growth_q*(beta_patient-beta_impatient)
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+- name: in_lambda_weight
+  description: Multiplier weight in the borrower bond Euler condition
+  default: null
+  method: derived
+  formula: 1-beta_impatient/beta_patient
+  source: Iacoviello and Neri (2010), stationary equilibrium and Appendix B; see docs/theory/two-sector-housing-production.md#balanced-growth
+equations:
+- id: goods-resource
+  expr: y_c-in_cpy*c_patient-in_ciy*c_impatient-in_kcy*(k_c-(1-delta_k_c)/in_growth_k*k_c(-1)-in_dc*a_k_in)-in_khy*(k_h-(1-delta_k_h)/in_growth_y*k_h(-1))-mu_b*in_qiy*(q_h+inv_h)-in_rkc_ss*in_kcy/in_growth_k*u_c-in_rkh_ss*in_khy/in_growth_y*u_h
+  description: Goods market clearing derived by summing household budgets, retaining utilisation resource
+    costs. Appendix B34 omits these costs although B1 includes them.
+  status: adapted
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B1, B12 and B34, printed pp.159-162
+  derivation: docs/theory/two-sector-housing-production.md#aggregation
+- id: borrower-budget
+  expr: in_ciy*c_impatient+in_qhiy*(q_h+h_impatient)-(1-delta_housing)/in_growth_h*in_qhiy*(q_h+h_impatient(-1))-in_wcin_y*(w_c_impatient+n_c_impatient)-in_whiny*(w_h_impatient+n_h_impatient)-in_by*b_borrower+in_r_ss/in_growth_y*in_by*(i(-1)-pi+b_borrower(-1))
+  description: Borrower budget including its wage-union dividends; debt is repaid at the previous nominal
+    rate and current inflation.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B12 and dividends, printed pp.160-162
+  derivation: docs/theory/housing-and-collateral.md#borrower-budget
+- id: patient-housing
+  expr: q_h+uc_patient-(1-in_patient_h_weight)*(a_z_in+a_j_in-h_patient)-in_patient_h_weight*(q_h(+1)+uc_patient(+1))
+  description: Patient housing user-cost condition with housing-specific trend.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B2, printed p.160
+  derivation: docs/theory/housing-and-collateral.md#housing-demand
+- id: patient-bond
+  expr: uc_patient-uc_patient(+1)-i+pi(+1)
+  description: Patient nominal bond Euler condition.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B3, printed p.160
+  derivation: docs/theory/housing-and-collateral.md#patient-budget
+- id: capital-c-no-adjustment
+  expr: uc_patient-a_k_in-uc_patient(+1)-beta_patient*in_growth_y/in_growth_k*in_rkc_ss*rk_c(+1)+beta_patient*in_growth_y/in_growth_k*(1-delta_k_c)*a_k_in(+1)
+  description: Net capital return Euler condition; direct utilisation return and marginal utilisation
+    cost cancel by the utilisation FOC.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B4-B5 and B9-B10, printed p.160
+  derivation: docs/theory/consumption-and-capital.md#in-capital-adjustment
+- id: capital-h-no-adjustment
+  expr: uc_patient-uc_patient(+1)-beta_patient*in_growth_y/in_growth_y*in_rkh_ss*rk_h(+1)
+  description: Net capital return Euler condition; direct utilisation return and marginal utilisation
+    cost cancel by the utilisation FOC.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B4-B5 and B9-B10, printed p.160
+  derivation: docs/theory/consumption-and-capital.md#in-capital-adjustment
+- id: labour-c-patient
+  expr: w_c_patient+uc_patient-xw_c_patient-a_z_in-a_tau_in-(eta_patient-xi_patient)*((1-in_labor_h_share)*n_c_patient+in_labor_h_share*n_h_patient)-xi_patient*n_c_patient
+  description: Sectoral labour optimality with imperfect mobility and the corresponding household marginal
+    utility.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Equations (1)-(2) and Appendix B6-B7, B16-B17, printed pp.128,160-161
+  derivation: docs/theory/two-sector-housing-production.md#factor-demands
+- id: labour-h-patient
+  expr: w_h_patient+uc_patient-xw_h_patient-a_z_in-a_tau_in-(eta_patient-xi_patient)*((1-in_labor_h_share)*n_c_patient+in_labor_h_share*n_h_patient)-xi_patient*n_h_patient
+  description: Sectoral labour optimality with imperfect mobility and the corresponding household marginal
+    utility.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Equations (1)-(2) and Appendix B6-B7, B16-B17, printed pp.128,160-161
+  derivation: docs/theory/two-sector-housing-production.md#factor-demands
+- id: labour-c-impatient
+  expr: w_c_impatient+uc_impatient-xw_c_impatient-a_z_in-a_tau_in-(eta_impatient-xi_impatient)*((1-in_labor_h_share)*n_c_impatient+in_labor_h_share*n_h_impatient)-xi_impatient*n_c_impatient
+  description: Sectoral labour optimality with imperfect mobility and the corresponding household marginal
+    utility.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Equations (1)-(2) and Appendix B6-B7, B16-B17, printed pp.128,160-161
+  derivation: docs/theory/two-sector-housing-production.md#factor-demands
+- id: labour-h-impatient
+  expr: w_h_impatient+uc_impatient-xw_h_impatient-a_z_in-a_tau_in-(eta_impatient-xi_impatient)*((1-in_labor_h_share)*n_c_impatient+in_labor_h_share*n_h_impatient)-xi_impatient*n_h_impatient
+  description: Sectoral labour optimality with imperfect mobility and the corresponding household marginal
+    utility.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Equations (1)-(2) and Appendix B6-B7, B16-B17, printed pp.128,160-161
+  derivation: docs/theory/two-sector-housing-production.md#factor-demands
+- id: goods-production
+  expr: y_c-(1-mu_c)*(a_c_in+alpha_patient*n_c_patient+(1-alpha_patient)*n_c_impatient)-mu_c*(k_c(-1)+u_c)
+  description: Goods production with predetermined capital.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B18, printed p.161
+  derivation: docs/theory/two-sector-housing-production.md#production
+- id: housing-production
+  expr: inv_h-(1-mu_h-mu_b-mu_land)*(a_h_in+alpha_patient*n_h_patient+(1-alpha_patient)*n_h_impatient)-mu_h*(k_h(-1)+u_h)-mu_b*(q_h+inv_h)
+  description: Housing production after intermediate-input substitution and fixed-land normalisation.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B19, B27 and B36, printed pp.161-162
+  derivation: docs/theory/housing-and-collateral.md#land-elimination
+- id: goods-labour-demand-patient
+  expr: w_c_patient+n_c_patient-y_c+x_price
+  description: Goods-sector factor demand for household-specific labour.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B20-B21, printed p.161
+  derivation: docs/theory/two-sector-housing-production.md#factor-demands
+- id: housing-labour-demand-patient
+  expr: w_h_patient+n_h_patient-q_h-inv_h
+  description: Housing-sector factor demand for household-specific labour.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B22-B23, printed p.161
+  derivation: docs/theory/two-sector-housing-production.md#factor-demands
+- id: goods-labour-demand-impatient
+  expr: w_c_impatient+n_c_impatient-y_c+x_price
+  description: Goods-sector factor demand for household-specific labour.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B20-B21, printed p.161
+  derivation: docs/theory/two-sector-housing-production.md#factor-demands
+- id: housing-labour-demand-impatient
+  expr: w_h_impatient+n_h_impatient-q_h-inv_h
+  description: Housing-sector factor demand for household-specific labour.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B22-B23, printed p.161
+  derivation: docs/theory/two-sector-housing-production.md#factor-demands
+- id: goods-capital-demand
+  expr: rk_c+u_c+k_c(-1)-y_c+x_price
+  description: Goods-sector capital-service rental demand.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B24, printed p.161
+  derivation: docs/theory/two-sector-housing-production.md#factor-demands
+- id: housing-capital-demand
+  expr: rk_h+u_h+k_h(-1)-q_h-inv_h
+  description: Housing-sector capital-service rental demand.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B25, printed p.161
+  derivation: docs/theory/two-sector-housing-production.md#factor-demands
+- id: flex-price
+  expr: x_price
+  description: Flexible-price constant markup closure.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B28, flexible-price limit, printed p.161
+  derivation: docs/theory/price-setting.md#in-price-setting
+- id: flex-wage-c-patient
+  expr: xw_c_patient
+  description: Flexible-wage constant markup closure.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B29-B32, flexible-wage limit, printed p.161
+  derivation: docs/theory/wage-setting.md#in-sectoral-wages
+- id: flex-wage-h-patient
+  expr: xw_h_patient
+  description: Flexible-wage constant markup closure.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B29-B32, flexible-wage limit, printed p.161
+  derivation: docs/theory/wage-setting.md#in-sectoral-wages
+- id: flex-wage-c-impatient
+  expr: xw_c_impatient
+  description: Flexible-wage constant markup closure.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B29-B32, flexible-wage limit, printed p.161
+  derivation: docs/theory/wage-setting.md#in-sectoral-wages
+- id: flex-wage-h-impatient
+  expr: xw_h_impatient
+  description: Flexible-wage constant markup closure.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B29-B32, flexible-wage limit, printed p.161
+  derivation: docs/theory/wage-setting.md#in-sectoral-wages
+- id: fixed-utilisation-c
+  expr: u_c
+  description: Fixed utilisation closure.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B9-B10, fixed-utilisation limit, printed p.160
+  derivation: docs/theory/consumption-and-capital.md#in-utilisation
+- id: fixed-utilisation-h
+  expr: u_h
+  description: Fixed utilisation closure.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B9-B10, fixed-utilisation limit, printed p.160
+  derivation: docs/theory/consumption-and-capital.md#in-utilisation
+- id: marginal-utility-no-habit-patient
+  expr: uc_patient+c_patient-a_z_in
+  description: No-habit log marginal utility; replaced by internal habits.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Equations (1)-(2), printed p.128
+  derivation: docs/theory/consumption-and-capital.md#in-internal-habits
+- id: marginal-utility-no-habit-impatient
+  expr: uc_impatient+c_impatient-a_z_in
+  description: No-habit log marginal utility; replaced by internal habits.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Equations (1)-(2), printed p.128
+  derivation: docs/theory/consumption-and-capital.md#in-internal-habits
+- id: housing-stock
+  expr: in_qhpy*h_patient+in_qhiy*h_impatient-(1-delta_housing)/in_growth_h*(in_qhpy*h_patient(-1)+in_qhiy*h_impatient(-1))-in_qiy*inv_h
+  description: Total housing stock-flow balance, expressed in steady goods-output value units.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B35, printed p.162
+  derivation: docs/theory/two-sector-housing-production.md#aggregation
+- id: shock-c
+  expr: a_c_in-rho_c_in*a_c_in(-1)-eps_c_in
+  description: Stationary log AR(1) disturbance.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Section I, shock laws and Table 4, printed pp.129-135,139
+  derivation: docs/theory/two-sector-housing-production.md#balanced-growth
+- id: shock-h
+  expr: a_h_in-rho_h_in*a_h_in(-1)-eps_h_in
+  description: Stationary log AR(1) disturbance.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Section I, shock laws and Table 4, printed pp.129-135,139
+  derivation: docs/theory/two-sector-housing-production.md#balanced-growth
+- id: shock-k
+  expr: a_k_in-rho_k_in*a_k_in(-1)-eps_k_in
+  description: Stationary log AR(1) disturbance.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Section I, shock laws and Table 4, printed pp.129-135,139
+  derivation: docs/theory/two-sector-housing-production.md#balanced-growth
+- id: shock-j
+  expr: a_j_in-rho_j_in*a_j_in(-1)-eps_j_in
+  description: Stationary log AR(1) disturbance.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Section I, shock laws and Table 4, printed pp.129-135,139
+  derivation: docs/theory/two-sector-housing-production.md#balanced-growth
+- id: shock-tau
+  expr: a_tau_in-rho_tau_in*a_tau_in(-1)-eps_tau_in
+  description: Stationary log AR(1) disturbance.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Section I, shock laws and Table 4, printed pp.129-135,139
+  derivation: docs/theory/two-sector-housing-production.md#balanced-growth
+- id: shock-z
+  expr: a_z_in-rho_z_in*a_z_in(-1)-eps_z_in
+  description: Stationary log AR(1) disturbance.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Section I, shock laws and Table 4, printed pp.129-135,139
+  derivation: docs/theory/two-sector-housing-production.md#balanced-growth
+- id: aggregate-consumption
+  expr: in_cy*c-in_cpy*c_patient-in_ciy*c_impatient
+  description: Sum of household consumption, linearised using steady consumption shares.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B34 and Section I, printed pp.133,162
+  derivation: docs/theory/two-sector-housing-production.md#aggregation
+- id: goods-capital-investment
+  expr: in_dc*inv_k_c-k_c+(1-delta_k_c)/in_growth_k*k_c(-1)
+  description: Goods-sector investment quantity before investment-specific efficiency conversion.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B34 and capital law, printed p.162
+  derivation: docs/theory/consumption-and-capital.md#in-capital-adjustment
+- id: housing-capital-investment
+  expr: in_dk_h*inv_k_h-k_h+(1-delta_k_h)/in_growth_y*k_h(-1)
+  description: Housing-sector capital investment quantity.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Appendix B34 and capital law, printed p.162
+  derivation: docs/theory/consumption-and-capital.md#in-capital-adjustment
+- id: aggregate-business-investment
+  expr: in_iky*inv-in_ikcy*inv_k_c-in_ikhy*inv_k_h
+  description: Business investment quantity index at reference balanced-growth shares.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Section I and Appendix B34, printed pp.133,162
+  derivation: docs/theory/two-sector-housing-production.md#aggregation
+- id: expenditure-gdp
+  expr: in_gdpy*y-in_cy*c-in_iky*inv-in_qiy*inv_h
+  description: Expenditure GDP index at constant reference house prices, as footnote 15 and the computational
+    reference. With utilisation costs retained this differs from the B33 value-added formula.
+  status: adapted
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Footnote 15, printed p.132, and Appendix B33, printed p.162
+  derivation: docs/theory/two-sector-housing-production.md#aggregation
+- id: aggregate-hours
+  expr: in_total_n*n-in_nc_p*n_c_patient-in_nc_i*n_c_impatient-in_nh_p*n_h_patient-in_nh_i*n_h_impatient
+  description: Total hours sum across households and production sectors.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Equations (1)-(2) and Section I, printed pp.128-133
+  derivation: docs/theory/two-sector-housing-production.md#aggregation
+- id: aggregate-real-wage
+  expr: in_total_wn_y*(w+n)-in_wcpny*(w_c_patient+n_c_patient)-in_wcin_y*(w_c_impatient+n_c_impatient)-in_whpny*(w_h_patient+n_h_patient)-in_whiny*(w_h_impatient+n_h_impatient)
+  description: Average real hourly wage equals aggregate gross labour income divided by total hours.
+  status: derived
+  source_check: verified_primary
+  source: Iacoviello and Neri (2010), Household labour incomes, Appendix B1 and B12, printed pp.159-160
+  derivation: docs/theory/two-sector-housing-production.md#aggregation
+shocks:
+- id: eps_c_in
+  description: Positive goods technology innovation raises goods productivity
+  normalisation: One natural-log unit innovation; reported standard deviations are metadata, not IRF scaling.
+  sign_convention: Positive goods technology innovation raises goods productivity
+  sd: 0.01
+  source: Iacoviello and Neri (2010), Table 4 posterior mean
+- id: eps_h_in
+  description: Positive housing technology innovation raises housing productivity
+  normalisation: One natural-log unit innovation; reported standard deviations are metadata, not IRF scaling.
+  sign_convention: Positive housing technology innovation raises housing productivity
+  sd: 0.0193
+  source: Iacoviello and Neri (2010), Table 4 posterior mean
+- id: eps_k_in
+  description: Positive investment technology innovation raises investment efficiency
+  normalisation: One natural-log unit innovation; reported standard deviations are metadata, not IRF scaling.
+  sign_convention: Positive investment technology innovation raises investment efficiency
+  sd: 0.0104
+  source: Iacoviello and Neri (2010), Table 4 posterior mean
+- id: eps_j_in
+  description: Positive housing preference innovation raises housing demand
+  normalisation: One natural-log unit innovation; reported standard deviations are metadata, not IRF scaling.
+  sign_convention: Positive housing preference innovation raises housing demand
+  sd: 0.0416
+  source: Iacoviello and Neri (2010), Table 4 posterior mean
+- id: eps_tau_in
+  description: Positive labour disutility innovation lowers labour supply
+  normalisation: One natural-log unit innovation; reported standard deviations are metadata, not IRF scaling.
+  sign_convention: Positive labour disutility innovation lowers labour supply
+  sd: 0.0254
+  source: Iacoviello and Neri (2010), Table 4 posterior mean
+- id: eps_z_in
+  description: Positive intertemporal preference innovation raises the current utility weight
+  normalisation: One natural-log unit innovation; reported standard deviations are metadata, not IRF scaling.
+  sign_convention: Positive intertemporal preference innovation raises the current utility weight
+  sd: 0.0178
+  source: Iacoviello and Neri (2010), Table 4 posterior mean
+replaces: []
+depends_on: []
+incompatible_with: []
+compatible_cores: []
+minimum_perturbation_order: 1
+equation_form: log-linear-deviations
+solution_requirement: First-order local solution around the balanced-growth path. The collateral multiplier
+  remains strictly positive.
+assumptions:
+- id: stationary-local-equilibrium
+  status: canonical
+  embodied_in:
+  - goods-resource
+  - borrower-budget
+  - patient-housing
+  - patient-bond
+  - capital-c-no-adjustment
+  - capital-h-no-adjustment
+  - labour-c-patient
+  - labour-h-patient
+  - labour-c-impatient
+  - labour-h-impatient
+  - goods-production
+  - housing-production
+  - goods-labour-demand-patient
+  - housing-labour-demand-patient
+  - goods-labour-demand-impatient
+  - housing-labour-demand-impatient
+  - goods-capital-demand
+  - housing-capital-demand
+  - flex-price
+  - flex-wage-c-patient
+  - flex-wage-h-patient
+  - flex-wage-c-impatient
+  - flex-wage-h-impatient
+  - fixed-utilisation-c
+  - fixed-utilisation-h
+  - marginal-utility-no-habit-patient
+  - marginal-utility-no-habit-impatient
+  - housing-stock
+  - shock-c
+  - shock-h
+  - shock-k
+  - shock-j
+  - shock-tau
+  - shock-z
+  - aggregate-consumption
+  - goods-capital-investment
+  - housing-capital-investment
+  - aggregate-business-investment
+  - expenditure-gdp
+  - aggregate-hours
+  - aggregate-real-wage
+  statement: Variables are stationary log deviations from the deterministic balanced-growth path; household-specific
+    discounting and sector-specific trends are retained.
+  substituting: An occasionally binding constraint or nonlinear global solution requires a separate specification.
+- id: two-household-asset-structure
+  status: canonical
+  embodied_in:
+  - borrower-budget
+  - patient-bond
+  statement: Patient households own capital and fixed land and lend to impatient households; the latter
+    own housing but no productive capital.
+  substituting: A representative household removes the collateral transmission channel and changes budgets
+    and steady-state coefficients.
+- id: fixed-land-and-intermediates
+  status: canonical
+  embodied_in:
+  - housing-production
+  statement: Land is fixed at one and material inputs satisfy their static optimality condition. Their
+    rents and quantities are eliminated algebraically.
+  substituting: An elastic land supply requires a separate stock, price and rent system.
+- id: expenditure-gdp-convention
+  status: library
+  embodied_in:
+  - expenditure-gdp
+  - goods-resource
+  statement: Expenditure GDP follows footnote 15. Goods resources retain utilisation costs derived from
+    the household budgets.
+  substituting: Appendix B33 and B34 have different aggregate accounting conventions once utilisation
+    costs are retained; that alternative requires a coherent change in resource and GDP definitions.
+verification:
+  reviewed_by: null
+  notes: Budget-consistent first-order interpretation of the published household conditions. The B34 omission
+    of utilisation costs and the B33 versus footnote-15 GDP definitions are resolved explicitly; adapted
+    equations identify these choices. Fixed-land rents and both bond positions are eliminated algebraically,
+    not absent economically.
+  open_questions:
+  - The printed B34 resource equation omits utilisation costs present in B1. The budget-consistent version
+    is used.
+  - Expenditure GDP follows footnote 15; with utilisation costs it differs from the value-added expression
+    beside B33.
+provenance:
+  license: Own implementation derived from the published equations
+  redistributable: true
+  permission_note: No external replication source or dataset is incorporated.
