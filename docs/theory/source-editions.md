@@ -51,6 +51,14 @@ selected for policy because B33's production-side expression differs by resource
 costs once those terms are retained. These choices are disclosed at equation level
 and in the model and theory specifications.
 
+Printed B4 also subtracts undepreciated nonhousing capital value. The budget B1
+implies positive resale value and negative utilisation expenditure, consistent
+with the analogous B5. The capital equations use this budget-derived reading;
+the negative printed resale sign is an apparent typographical inconsistency,
+without an author-confirmed erratum. The consolidated
+[source comparison](../../models/iacoviello-neri-2010/spec/source-differences.md)
+separates these choices from coefficient, estimation and normalisation differences.
+
 The growth normalisation exponentiates the weighted technology trend coefficients,
 matching the numerical reference and the paper's net-growth formulas to first
 order. Complete published estimation metadata are in

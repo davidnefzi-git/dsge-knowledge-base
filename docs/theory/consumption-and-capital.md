@@ -257,6 +257,14 @@ The optimum equates current marginal acquisition and adjustment costs to the
 expected rental, resale and next-period adjustment benefit. Rental income is net
 of utilisation costs, as in the full patient budget.
 
+Printed B4 on p. 160 subtracts the entire expression
+$[a_c(z_{c,t+1})+1-\delta_{kc}]/A_{k,t+1}$ from rental services.
+Differentiating B1 instead gives a positive undepreciated resale value and a
+negative utilisation expense, $[1-\delta_{kc}-a_c(z_{c,t+1})]/A_{k,t+1}$.
+This agrees with the analogous resale treatment in B5. The equations below
+follow that budget-derived condition. The printed B4 sign is treated as an
+apparent typographical inconsistency, without an author-confirmed erratum.
+
 With stationary log deviations $k_s$, marginal utility $u_c^p$, technology $a_k$
 and rental rates $r_s$, define $G_K$ for nonhousing capital and $G_C$ for
 construction capital. The two first-order conditions are

@@ -11,10 +11,14 @@ observables and published posterior distributions separately from the numerical
 solution at fixed parameter values.
 
 The equations use a **budget-consistent interpretation** of the published system.
-Three source inconsistencies require explicit treatment: the internal-habit
+Source discrepancies require explicit treatment: the internal-habit
 preference shock differs in the numerical reference, the printed patient
 housing-wage slope repeats the other sector's stickiness symbol, and B34 omits
-utilisation resource costs contained in the patient budget. These issues prevent
+utilisation resource costs contained in the patient budget. Printed B4 also gives
+undepreciated capital a negative resale value; this entry follows the positive
+value implied by the budget. The [source comparison](source-differences.md)
+distinguishes these equation choices from parameter, estimation and unit differences.
+These issues prevent
 a claim that every printed and reference-code equation is reproduced unchanged.
 
 ## Households and production
@@ -147,7 +151,7 @@ relations outside its numbered system are listed afterwards.
 | B1 | 159 (35) | Full patient budget, including dividends, land and utilisation costs; implied by goods clearing and borrower budget in the reduced system |
 | B2 | 160 (36) | Patient housing Euler equation |
 | B3 | 160 (36) | Patient bond Euler equation |
-| B4 | 160 (36) | Nonhousing capital optimum; net utilisation return and stock adjustment |
+| B4 | 160 (36) | Nonhousing capital optimum; positive resale value derived from B1, net utilisation return and stock adjustment; printed resale sign is apparently inconsistent |
 | B5 | 160 (36) | Construction capital optimum; net utilisation return and stock adjustment |
 | B6 | 160 (36) | Patient nonhousing labour supply and wage markup |
 | B7 | 160 (36) | Patient construction labour supply and wage markup |
